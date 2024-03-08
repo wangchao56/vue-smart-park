@@ -1,15 +1,23 @@
 import axios from 'axios';
 
- const request = axios.create({
+let request = axios.create({
   baseURL: 'https://api-hmzs.itheima.net/v1',
-  timeout: 3000
+  timeout: 3000,
+  headers: {}
 });
+
 
 /**
  * 请求拦截器
  * 
  */
 request.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  //请求头添加token
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+
   return config;
 }
 , error => {
@@ -35,6 +43,7 @@ request.interceptors.response.use(response => {
 , error => {
   return Promise.reject(error);
 });
+
 
 
 export default  request
