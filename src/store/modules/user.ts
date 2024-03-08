@@ -16,7 +16,7 @@ const useAuthStore  = defineStore('auth-store',{
     state: ():API.AuthStoreState => ({
         token: '',
         userInfo: {
-            name: '',
+            userName: '',
             age: 0
         },
     }),

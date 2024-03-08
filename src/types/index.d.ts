@@ -6,8 +6,9 @@ namespace API {
         msg?: string;
     }
     interface User {
-        name: string;
-        age: number;
+        userName: string;
+        userId?: string;
+        age?: number;
     }
 
     /**

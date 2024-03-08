@@ -1,0 +1,5 @@
+@import url(e:\project\vue-smart-park\src\styles\normalize.css);
+:root {
+  --el-aside-width: 300px !important;
+  --m-bg-color: #dde1e1;
+}

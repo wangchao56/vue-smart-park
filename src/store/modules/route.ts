@@ -4,18 +4,24 @@
  * 2. 路由信息
  * 3. 路由状态
  */
+import { defineStore } from 'pinia';
+import {StaticRoutes } from '@/router/index';
+import { RouteRecordRaw } from 'vue-router';
 
-import { defineStore } from 'pinia'
+interface RouteState {
+    routes: RouteRecordRaw[];
+}
+
 
 const useRouteStore = defineStore('route-store', {
-    state: () => ({
-        routes: [],
-        addRoutes: []
+    state: ():RouteState => ({
+        routes: [...StaticRoutes], 
     }),
     actions: {
+
     },
     getters: {
-
+      
     }
 })
 

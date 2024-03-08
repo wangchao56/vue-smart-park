@@ -1,7 +1,9 @@
 import { App } from 'vue';
 import {createPinia,defineStore} from 'pinia';
+
+
+const pinia = createPinia();
 export * from './modules/index';
-export const pinia = createPinia();
 export const useStore = defineStore('store', {
     state: () => ({
         count: 0
@@ -17,7 +19,6 @@ export const useStore = defineStore('store', {
 
 export default {
     install: (app:App<Element> ) => {
-        console.log('app: ', app);
         app.use(pinia);
     }
 }
