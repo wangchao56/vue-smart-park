@@ -1,5 +1,6 @@
 import request from "../request"
 
+export * from './carManagement'
 
 /**
  *  登录接口
@@ -241,3 +242,131 @@ export const AddUser = (data: API.AddUserParams, headers: API.ResquestHeaders) =
         data,
         headers
     })}
+
+
+/**
+ * 系统管理-用户管理-编辑用户
+ * /park/sys/user
+ */
+
+export const UpdateUser = (data: API.AddUserParams, headers: API.ResquestHeaders) => {
+    return request({
+        url: '/park/sys/user',
+        method: 'put',
+        data,
+        headers
+    })
+}
+
+/**
+ * 系统管理-用户管理-删除用户
+ * /park/sys/user/{id}
+ * 
+ */
+
+export const DeleteUser = (id: string, headers: API.ResquestHeaders) => {
+    return request({
+        url: `/park/sys/user/${id}`,
+        method: 'delete',
+        headers
+    })
+}
+
+/**
+ * 系统管理-角色管理-删除角色
+ * /park/sys/role/{id}
+ *  @param id 角色id
+ */
+
+export const DeleteRole = (id: string, headers: API.ResquestHeaders) => {
+    return request({
+        url: `/park/sys/role/${id}`,
+        method: 'delete',
+        headers
+    })
+}
+
+/**
+ * 系统管理-角色管理-查询所有角色
+ * /park/sys/role
+ * @param params { page: string, pageSize: string }
+ */
+
+export const GetRoleList = () => {
+    return request({
+        url: '/park/sys/role',
+        method: 'get',
+    })}
+
+    /**
+     * 系统管理-角色管理-添加角色
+     *  /park/sys/role
+     */
+
+export const AddRole = (data:API.AddRoleInfo, headers: API.ResquestHeaders) => {
+    return request({
+        url: '/park/sys/role',
+        method: 'post',
+        data,
+        headers
+    })
+}
+
+/**
+ * 系统管理-角色管理-查询当前角色详情-权限和分配人数
+ * /park/sys/role/{roleId}
+ * path 参数 roleId 角色id
+ * @param roleId 角色id
+ */
+
+export const GetRoleDetail = (roleId: string) => {
+    return request({
+        url: `/park/sys/role/${roleId}`,
+        method: 'get'
+    })
+}
+
+
+/**
+ * 系统管理-角色管理-修改角色
+ * /park/sys/role
+ * 
+ */
+
+export const UpdateRole = (data: API.AddRoleInfo, headers: API.ResquestHeaders) => {
+    return request({
+        url: '/park/sys/role',
+        method: 'put',
+        data,
+        headers
+    })}
+
+/**
+ * 系统管理-角色管理-查询所有功能权限(树形)
+ * /park/sys/permision/all/tree
+ */
+
+export const GetAllPermission = () => {
+    return request({
+        url: '/park/sys/permision/all/tree',
+        method: 'get'
+    })
+}
+
+/**
+ * 系统管理-角色管理-角色关联的用户列表
+ * /park/sys/roleUser/{roleId}
+ * @param roleId 角色id
+ * query 参数 page  pageSize
+ *  @param  parmas { page: string, pageSize: string }
+ */
+
+export const GetRoleUserList = (roleId: string, params: API.PageParams) => {
+    return request({
+        url: `/park/sys/roleUser/${roleId}`,
+        method: 'get',
+        params
+ })}
+
+
+

@@ -123,4 +123,135 @@ namespace API {
         cardProportion: number;
     }
 
+    interface AddRoleInfo {
+        /**角色id */
+        id?: string;
+        /**角色名称 */
+        roleName: string;
+        /**角色描述*/
+        remark: string;
+        /**菜单/功能点权限信息 */
+        perms: number [];
+    }
+
+/**
+ * 计费规则详情
+ */    
+interface CarRuleDetail {
+    /** 创建者ID */
+    createBy: number;
+    /** 创建时间 */
+    createTime: string;
+    /** 更新者ID */
+    updateBy: number;
+    /** 更新时间 */
+    updateTime: string;
+    /** 备注 */
+    remark: null | string;
+    /** 演示标志 */
+    demoFlag: number;
+    /** ID */
+    id: number;
+    /** 规则编号 */
+    ruleNumber: string;
+    /** 规则名称 */
+    ruleName: string;
+    /** 免费时长 */
+    freeDuration: number;
+    /** 收费上限 */
+    chargeCeiling: number;
+    /** 收费类型 */
+    chargeType: string;
+    /** 持续分钟时间 */
+    durationMinuteTime: null | any;
+    /** 持续分钟价格 */
+    durationMinutePrice: null | any;
+    /** 持续小时时间 */
+    durationHourTime: null | any;
+    /** 持续小时价格 */
+    durationHourPrice: null | any;
+    /** 转向价格 */
+    turnPrice: null | any;
+    /** 分区帧时间 */
+    partitionFrameTime: number;
+    /** 分区帧价格 */
+    partitionFramePrice: number;
+    /** 分区增加时间 */
+    partitionIncreaseTime: number;
+    /** 分区增加价格 */
+    partitionIncreasePrice: number;
+    /** 规则名称视图 */
+    ruleNameView: string;
+    /** 删除标志 */
+    delFlag: number;
+}
+
+/**
+ * 月卡详情
+ */
+
+interface CarCardDetail {
+    /** 人名 */
+    personName: string;
+    /** 手机号 */
+    phoneNumber: string;
+    /** 车牌号 */
+    carNumber: string;
+    /** 车辆品牌 */
+    carBrand: string;
+    /** 卡开始日期 */
+    cardStartDate: string;
+    /** 卡结束日期 */
+    cardEndDate: string;
+    /** 支付方式 */
+    paymentMethod: string;
+    /** 支付金额 */
+    paymentAmount: number;
+    /** 车辆信息ID */
+    carInfoId: number;
+    /** 充值ID */
+    rechargeId: number;
+    /** 卡状态 */
+    cardStatus: number;
+}
+
+/**
+ * 查看月卡信息 参数
+ */
+ interface ShowCarMonthCard {
+    /** 页数 */
+    page: string;
+    /** 条数 */
+    pageSize: string;
+    /** 车牌号 */
+    carNumber?: string;
+    /** 车主姓名 */
+    personName?: string;
+    /** 状态 0:可用，1:已过期 */
+    cardStatus?: number;
+}
+
+/**
+ * 月卡信息
+ */
+interface MonthCardInfo {
+    /** ID */
+    id: number;
+    /** 人名 */
+    personName: string;
+    /** 手机号 */
+    phoneNumber: string;
+    /** 车牌号 */
+    carNumber: string;
+    /** 车辆品牌 */
+    carBrand: string;
+    /** 总有效日期 */
+    totalEffectiveDate: number;
+    /** 卡状态 */
+    cardStatus: number;
+    /** 演示标志 */
+    demoFlag: number;
+}
+
+
 }
