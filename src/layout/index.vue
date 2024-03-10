@@ -4,7 +4,7 @@
             <el-aside width="200px">
                 <!-- logo区 -->
                 <div class="logo">
-                    <img src="@/assets/logo-white.png" alt="logo" />
+                    <img src="@/assets/images/logo-white.png" alt="logo" />
                 </div>
                 <!-- 菜单区 -->
                 <asidemenu :routesList="routeStore.routes" />
@@ -13,12 +13,6 @@
                 <el-header>
                     <el-row>
                         <el-col :span="18" class="header-breadcrumb">
-                            <el-breadcrumb separator-class="el-icon-arrow-right">
-                                <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                                <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-                                <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-                                <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-                            </el-breadcrumb>
                         </el-col>
                         <el-col :span="6" class="header-dropdown">
                             <el-dropdown>
@@ -35,13 +29,14 @@
                                 </template>
                             </el-dropdown>
                         </el-col>
-
                     </el-row>
-
-
                 </el-header>
                 <el-main>
-                    <router-view />
+                    <router-view v-slot="{ Component }">
+                        <Transition mode="out-in">
+                            <component :is="Component" />
+                        </Transition>
+                    </router-view>
                 </el-main>
             </el-container>
         </el-container>
@@ -53,23 +48,25 @@ import { RouterView } from 'vue-router';
 import {
     CirclePlusFilled,
 } from '@element-plus/icons-vue';
-import squareUrl from '@/assets/logo-1.png';
-import { useRouteStore } from '@/store';
+import squareUrl from '@/assets/images/logo-1.png';
+import { useRouteStore, useAuthStore } from '@/store';
 import asidemenu from './asidemenu/index.vue';
 // 侧边栏菜单 
 //获取当前路由routes
 const routeStore = useRouteStore();
+const authStore = useAuthStore();
 
 const handleLoginOut = () => {
-    console.log('退出登录');
-}; 
+    authStore.loginOutAction();
+};
+
 </script>
 
 <style lang='scss' scoped>
 .common-layout {
 
     .el-aside {
-        width: 300px;
+        width: 240px;
         background-color: var(--m-bg-color);
         height: 100vh;
         overflow-y: hidden;
@@ -77,22 +74,22 @@ const handleLoginOut = () => {
     }
 
     .el-header {
-        height: 90px;
-        max-height: 90px;
+        height: 80px;
+        max-height: 80px;
         background-color: var(--m-bg-color);
         text-align: center;
         line-height: 60px;
         font-size: 16px;
 
         .header-breadcrumb {
-            height: 90px;
+            height: 80px;
             display: flex;
             align-items: center;
             padding: 0 20px;
         }
 
         .header-dropdown {
-            height: 90px;
+            height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -122,7 +119,7 @@ const handleLoginOut = () => {
 
     .logo {
         width: 100%;
-        height: 90px;
+        height: 80px;
         will-change: filter; // 提前告诉浏览器这个元素会有变化
         transition: filter 300ms;
         // 不可选 
@@ -143,7 +140,5 @@ const handleLoginOut = () => {
             -webkit-user-drag: none;
         }
     }
-
-
 }
 </style>

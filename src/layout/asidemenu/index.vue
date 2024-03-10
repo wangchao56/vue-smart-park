@@ -59,8 +59,9 @@ const menuList = computed(() => {
             });
         }
     });
-    console.log(menu1);
-    return menu1;
+    console.log('menu1: ', menu1);
+
+    return menu1.sort((a, b) => a.meta?.order as number - (b.meta?.order as number));
 });
 
 const handleSelect = (index: string) => {

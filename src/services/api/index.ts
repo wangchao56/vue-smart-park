@@ -7,7 +7,7 @@ export * from './carManagement'
  * @param data  登录参数 
  * @returns  Promise    
  */
-export const LoginAPi = (data: API.LoginParams) =>  {
+export const LoginAPi = (data: API.LoginParams) => {
     return request({
         url: '/park/login',
         method: 'post',
@@ -23,7 +23,7 @@ export const GetUserList = () => {
     return request({
         url: '/system/user/dropList',
         method: 'get'
-    })  
+    })
 }
 
 
@@ -36,7 +36,7 @@ export const GetUserInfoAndProfile = () => {
     return request({
         url: '/park/user/profile',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.UserProfile>>
 }
 
 /**
@@ -47,10 +47,8 @@ export const getCurrentUserRoutes = () => {
     return request({
         url: '/park/user/router',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.UserRouteInfo>>
 }
-
-
 
 
 
@@ -156,12 +154,12 @@ export const GetWorkbenchRentInfo = (params: API.PageParams) => {
 
 
 
-export const UpdatePassword = (data: API.UpdatePasswordParams ,headers:API.ResquestHeaders ) => {
+export const UpdatePassword = (data: API.UpdatePasswordParams, headers: API.ResquestHeaders) => {
     return request({
         url: '/park/profile/updatePwd',
         method: 'put',
         data,
-        headers 
+        headers
     })
 }
 
@@ -201,7 +199,7 @@ export const GetUserListInfo = (params: API.PageParams & { name?: string }) => {
  * @param id 用户id 
  */
 
-export const GetUserDetail = (id: string) => {
+export const GetUserDetail = (id: string | number) => {
     return request({
         url: `/park/sys/user/${id}`,
         method: 'get'
@@ -234,14 +232,15 @@ export const ResetUserPassword = (data: { id: string }, headers: API.ResquestHea
  * 
  * @param data  { name: string, userName: string, roleId: number, roleName: string, password: string, phonenumber: string, status: number }
  */
- 
+
 export const AddUser = (data: API.AddUserParams, headers: API.ResquestHeaders) => {
     return request({
         url: '/park/sys/user',
         method: 'post',
         data,
         headers
-    })}
+    }) as Promise<API.Response>
+}
 
 
 /**
@@ -264,12 +263,12 @@ export const UpdateUser = (data: API.AddUserParams, headers: API.ResquestHeaders
  * 
  */
 
-export const DeleteUser = (id: string, headers: API.ResquestHeaders) => {
+export const DeleteUser = (id: number | string, headers: API.ResquestHeaders) => {
     return request({
         url: `/park/sys/user/${id}`,
         method: 'delete',
         headers
-    })
+    }) as Promise<API.Response>
 }
 
 /**
@@ -296,14 +295,15 @@ export const GetRoleList = () => {
     return request({
         url: '/park/sys/role',
         method: 'get',
-    })}
+    })
+}
 
-    /**
-     * 系统管理-角色管理-添加角色
-     *  /park/sys/role
-     */
+/**
+ * 系统管理-角色管理-添加角色
+ *  /park/sys/role
+ */
 
-export const AddRole = (data:API.AddRoleInfo, headers: API.ResquestHeaders) => {
+export const AddRole = (data: API.AddRoleInfo, headers: API.ResquestHeaders) => {
     return request({
         url: '/park/sys/role',
         method: 'post',
@@ -339,7 +339,8 @@ export const UpdateRole = (data: API.AddRoleInfo, headers: API.ResquestHeaders) 
         method: 'put',
         data,
         headers
-    })}
+    })
+}
 
 /**
  * 系统管理-角色管理-查询所有功能权限(树形)
@@ -366,7 +367,8 @@ export const GetRoleUserList = (roleId: string, params: API.PageParams) => {
         url: `/park/sys/roleUser/${roleId}`,
         method: 'get',
         params
- })}
+    })
+}
 
 
 

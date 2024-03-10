@@ -1,5 +1,8 @@
 <template>
-    <el-icon>
+    <div v-if="isExternal">
+        <img :src="icon" alt="" srcset="">
+    </div>
+    <el-icon v-else>
         <component :is="icon" />
     </el-icon>
 </template>
@@ -12,9 +15,9 @@ const props = defineProps<{
 }>();
 
 //判断是否是外链 或者本地 svg  图片  ，还有是否以el-icon-开头
-const isExternal = (path: string) => {
-    return /^(https?:|mailto:|tel:)/.test(path);
-};
+const isExternal = computed(() => {
+    return /^(https?:|mailto:|tel:)/.test(props.src);
+})
 
 const isIcon = (path: string) => {
     return /^el-icon-/.test(path);

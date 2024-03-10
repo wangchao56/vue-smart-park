@@ -1,6 +1,10 @@
 import CustomIcon from "./CustomIcon.vue";
-const components:Record<string,any> = {
-    CustomIcon
+import AuthComponent from "./AuthComponent.vue";
+
+const components: Record<string, any> = {
+    CustomIcon,
+    AuthButton: AuthComponent
+
 }
 
-export default  components;
+export default components;

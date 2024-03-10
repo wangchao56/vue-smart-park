@@ -1,4 +1,8 @@
 import axios from 'axios';
+import message from '@/utils/message';
+import { useAuthStore } from '@/store';
+import { removeToken } from '@/utils/auth';
+import { router } from '@/router/index';
 
 let request = axios.create({
   baseURL: 'https://api-hmzs.itheima.net/v1',
@@ -20,10 +24,9 @@ request.interceptors.request.use(config => {
 
   return config;
 }
-, error => {
-  return Promise.reject(error);
-});
-
+  , error => {
+    return Promise.reject(error);
+  });
 
 /**
  * 响应拦截器
@@ -37,14 +40,26 @@ request.interceptors.response.use(response => {
   } else {
     return Promise.reject(response);
   }
-
-  return response;
 }
-, error => {
-  return Promise.reject(error);
-});
+  , error => {
+    //响应错误
+    message.error(error.response.data?.msg);
+    //token过期 处理
+    if (error.response.status === 401) {
+      const authStore = useAuthStore();
+      //跳转到登录页面
+      //当前页面的路由路径
+      const currentPath = router.currentRoute.value.path;
+      router.push(`/login?redirect=${currentPath}`);
+      //清除用户信息
+      authStore.clearState();
+      removeToken();
+    }
+
+    return Promise.reject(error);
+  });
 
 
 
-export default  request
+export default request
 

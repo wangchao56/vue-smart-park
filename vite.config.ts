@@ -10,6 +10,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
   plugins: [vue()
     , AutoImport({
+      // 自动导入vue api 比如 ref,reactive
+      imports: ['vue'],
       resolvers: [
         // 自动导入图标组件
         IconsResolver({
