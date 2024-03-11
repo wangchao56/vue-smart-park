@@ -476,12 +476,12 @@ export const PutBuilding = (data: API.BuildingInfo) => {
  * /park/building
  */
 
-export const GetBuilding = (params: API.BuildingListQuery) => {
+export const GetBuildingList = (params: API.BuildingListQuery) => {
     return request({
         url: `/park/building`,
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.ResListType<API.BuildingInfo>>>
 }
 
 
@@ -552,4 +552,27 @@ export const DetelePoleInfo = (ids: string) => {
         url: `/pole/info/${ids}`,
         method: 'delete'
     })
+}
+
+
+/**
+ * 查看一体杆列表
+ */
+
+
+
+//=========================告警========================
+
+/**
+ * 查看告警记录列表
+ * /pole/warning/list
+ */
+
+
+export const GetPoleWarningList = (params: API.WarningQueryParams) => {
+    return request({
+        url: `/pole/warning/list`,
+        method: 'get',
+        params
+    }) as Promise<API.Response<API.ResListType<API.WarningInfo>>>
 }

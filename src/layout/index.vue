@@ -64,12 +64,18 @@ const handleLoginOut = () => {
 
 <style lang='scss' scoped>
 .common-layout {
+    overflow: hidden;
 
     .el-aside {
         width: 240px;
         background-color: var(--m-bg-color);
         height: 100vh;
         overflow-y: hidden;
+
+    }
+
+    .el-container {
+        height: 100vh;
 
     }
 
@@ -111,6 +117,7 @@ const handleLoginOut = () => {
 
     .el-main {
         background-color: #f3f3f3;
+        overflow-y: auto !important;
     }
 
     .el-menu-vertical-demo {

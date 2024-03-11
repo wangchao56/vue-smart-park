@@ -140,7 +140,7 @@ export const GetWorkbenchRentInfo = (params: API.PageParams) => {
         url: '/home/workbench/rentInfo',
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.ResListType<API.RentInfo>>>
 }
 
 
@@ -172,7 +172,9 @@ export const GetWorkbenchInfo = () => {
     return request({
         url: '/home/workbench/info',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.BaseDataType & {
+        annualIncomeArray: API.AnnualIncomeArrayType,
+    }>>
 }
 
 

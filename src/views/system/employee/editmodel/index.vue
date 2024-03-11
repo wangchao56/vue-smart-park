@@ -59,7 +59,6 @@ const dialogVisible = ref<boolean>(props.visible)
 
 watch(() => props.visible, (val) => {
     dialogVisible.value = val
-    console.log(val);
 })
 //表单数据
 const addForm = reactive<API.AddUserParams>({
@@ -87,7 +86,6 @@ const roleList = ref<API.RoleInfo[]>([])
 onMounted(async () => {
     //获取角色列表
     const res = await GetRoleList()
-    console.log('res: ', res);
     roleList.value = res.data
 })
 
@@ -103,10 +101,8 @@ const addFormRules = {
 
 const handleAction = (_form: FormInstance | undefined) => {
     if (!_form) return
-    console.log(props.flag);
     _form?.validate(async (valid: boolean) => {
         if (valid) {
-            console.log('addForm: ', addForm);
             //提交表单
             if (props.flag === 'add') {
                 //新增员工
@@ -127,7 +123,6 @@ const handleAction = (_form: FormInstance | undefined) => {
                 const res = await UpdateUser(addForm, {
                     'Content-Type': 'application/json'
                 })
-                console.log('res: ', res);
             }
         } else {
             return false

@@ -1,3 +1,4 @@
+
 // Path: src/typings/index.ts
 namespace API {
     interface Response<T = any> {
@@ -499,6 +500,8 @@ namespace API {
 
         /** 物业费单价 */
         propertyFeePrice: number;
+        /** 状态 */
+        status: number;
     }
 
 
@@ -509,5 +512,49 @@ namespace API {
         pageSize: string;
         /**楼宇名称模糊 查询 */
         name?: string;
+    }
+    interface BaseDataType {
+        annualIncome: number;
+        enterpriseTotal: number;
+        monthCardTotal: number;
+        chargePoleTotal: number;
+    }
+
+    interface AnnualIncomeArrayType {
+        xmonth: string[];
+        ybuilding: number[];
+        yparking: number[];
+    }
+
+    interface RentInfo {
+        buildingId: number;
+        buildingName: string;
+        endTime: string;
+        enterpriseId: number;
+        enterpriseName: string;
+        startTime: string;
+        id: number;
+    }
+
+    interface ResListType<T> {
+        rows: T[];
+        total: number;
+    }
+
+    interface WarningQueryParams {
+        page: string;
+        pageSize: string;
+        poleNumber?: string;
+        handleStatus?: string;
+        poleName?: string;
+    }
+
+    interface WarningInfo {
+        id?: number;
+        poleNumber: string;
+        poleName: string;
+        errorType: string;
+        handleStatus: string;
+        warningTime: string;
     }
 }

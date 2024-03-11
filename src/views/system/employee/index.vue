@@ -91,7 +91,6 @@ const employeeList = ref<API.EmployeeInfo[]>([])
 // 获取员工列表
 const initData = async () => {
     const res = await GetUserListInfo(params)
-    console.log(res)
     employeeList.value = res.data.rows
     total.value = res.data.total
 }
@@ -120,7 +119,6 @@ const handleModel = (_flag: 'add' | 'edit', data?: API.EmployeeInfo) => {
     visibleModel.value = true
     flag.value = _flag
     if (_flag === 'edit') {
-        console.log('data: ', data);
         formData = data as API.EmployeeInfo
     } else {
         // 新增员工
@@ -129,7 +127,6 @@ const handleModel = (_flag: 'add' | 'edit', data?: API.EmployeeInfo) => {
 }
 
 const handleCloseAction = (val: boolean) => {
-    console.log('val: ', val);
     visibleModel.value = val;
     // 关闭弹窗后重新获取数据
     initData();
@@ -143,7 +140,6 @@ const cancelEvent = () => {
 }
 
 const handleRemove = async (data: API.EmployeeInfo) => {
-    console.log("object", data);
     return
     const res = await DeleteUser(data.id as number, {
         'Content-Type': 'application/json'
@@ -156,7 +152,6 @@ const handleRemove = async (data: API.EmployeeInfo) => {
 
 const handleSHowDetail = async (data: API.EmployeeInfo) => {
     const res = await GetUserDetail(data.id as number)
-    console.log('res: ', res);
     formData = res.data
 }
 </script>

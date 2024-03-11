@@ -15,6 +15,12 @@ interface Options {
  */
 class Message {
 
+    //成功提示
+    success(message: string) {
+        ElMessage.success(message)
+    }
+
+
     error(message: string, _options?: Options) {
         const options: Options = {
             showClose: true,

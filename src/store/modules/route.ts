@@ -23,7 +23,6 @@ const useRouteStore = defineStore('route-store', {
          */
         async getCurrentUserRoutesAction() {
             const res = await getCurrentUserRoutes();
-            console.log('res: ', res);
             //TODO: 根据后台返回的路由信息动态添加路由 
             //处理
             return res.data;
