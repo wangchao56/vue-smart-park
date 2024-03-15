@@ -9,28 +9,8 @@
                 <!-- 菜单区 -->
                 <asidemenu :routesList="routeStore.routes" />
             </el-aside>
-            <el-container>
-                <el-header>
-                    <el-row>
-                        <el-col :span="18" class="header-breadcrumb">
-                        </el-col>
-                        <el-col :span="6" class="header-dropdown">
-                            <el-dropdown>
-                                <div class="header-avater">
-                                    <el-avatar shape="circle" :size="50" :src="squareUrl" />
-                                    <span>管理员</span>
-                                </div>
-                                <template #dropdown>
-                                    <el-dropdown-menu>
-                                        <el-dropdown-item :icon="CirclePlusFilled" @click="handleLoginOut">
-                                            退出登录
-                                        </el-dropdown-item>
-                                    </el-dropdown-menu>
-                                </template>
-                            </el-dropdown>
-                        </el-col>
-                    </el-row>
-                </el-header>
+            <el-container class="right-container">
+                <Headerlayout />
                 <el-main>
                     <router-view v-slot="{ Component }">
                         <Transition mode="out-in">
@@ -45,20 +25,14 @@
 
 <script setup lang='ts'>
 import { RouterView } from 'vue-router';
-import {
-    CirclePlusFilled,
-} from '@element-plus/icons-vue';
-import squareUrl from '@/assets/images/logo-1.png';
-import { useRouteStore, useAuthStore } from '@/store';
+import { useRouteStore } from '@/store';
 import asidemenu from './asidemenu/index.vue';
+import Headerlayout from './headerLayout/index.vue';
 // 侧边栏菜单 
 //获取当前路由routes
 const routeStore = useRouteStore();
-const authStore = useAuthStore();
 
-const handleLoginOut = () => {
-    authStore.loginOutAction();
-};
+
 
 </script>
 
@@ -77,6 +51,13 @@ const handleLoginOut = () => {
     .el-container {
         height: 100vh;
 
+    }
+
+    .right-container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: hidden;
     }
 
     .el-header {

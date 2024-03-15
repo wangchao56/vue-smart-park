@@ -221,11 +221,7 @@ namespace API {
     /**
      * 查看月卡信息 参数
      */
-    interface ShowCarMonthCard {
-        /** 页数 */
-        page: string;
-        /** 条数 */
-        pageSize: string;
+    interface ShowCarMonthCard extends PageParams {
         /** 车牌号 */
         carNumber?: string;
         /** 车主姓名 */
@@ -353,13 +349,7 @@ namespace API {
     /**
      * 停车缴费列表查询参数
      */
-    interface CarPaymentListQuery {
-        /** 页数 */
-        page: string;
-
-        /** 条数 */
-        pageSize: string;
-
+    interface CarPaymentListQuery extends PageParams {
         /** 车牌号 */
         carNumber?: string;
 
@@ -505,11 +495,7 @@ namespace API {
     }
 
 
-    interface BuildingListQuery {
-        /**当前页 */
-        page: string;
-        /**每页大小 */
-        pageSize: string;
+    interface BuildingListQuery extends PageParams {
         /**楼宇名称模糊 查询 */
         name?: string;
     }
@@ -541,9 +527,7 @@ namespace API {
         total: number;
     }
 
-    interface WarningQueryParams {
-        page: string;
-        pageSize: string;
+    interface WarningQueryParams extends PageParams {
         poleNumber?: string;
         handleStatus?: string;
         poleName?: string;
@@ -557,4 +541,300 @@ namespace API {
         handleStatus: string;
         warningTime: string;
     }
+
+
+    interface PoleListQuery extends PageParams {
+        /** 一体杆编号 */
+        poleNumber?: string;
+        /** 一体杆名称 */
+        poleName?: string;
+        /** 一体杆状态 0 正常 1：异常 */
+        poleStatus?: string;
+    }
+
+
+    interface PoleInfo {
+        /** 一体杆id */
+        id: number;
+        /** 一体杆编号 */
+        poleNumber: string;
+        /** 一体杆名称 */
+        poleName: string;
+        /** 一体杆ip地址 */
+        poleIp: string;
+        /** 区域名称 */
+        areaName: string;
+        /** 区域id */
+        areaId: number;
+        /** 一体杆类型 */
+        poleType: string;
+        /** 一体杆状态 */
+        poleStatus: string;
+    }
+
+    interface EnterpriseListQuery extends PageParams {
+        /** 企业名称 */
+        name?: string;
+    }
+
+    interface EnterpriseBaseInfo {
+        /** 企业id */
+        id?: number;
+
+        /** 企业名称 */
+        name: string;
+
+        /** 联系人 */
+        contact: string;
+
+        /** 联系电话 */
+        contactNumber: string;
+
+        /**   */
+        existContractFlag: number;
+
+    }
+
+    interface EnterpriseInfo {
+        /** 企业id */
+        id: number;
+
+        /** 企业名称 */
+        name: string;
+
+        /** 企业法人 */
+        legalPerson: string;
+
+        /** 注册地址 */
+        registeredAddress: string;
+
+        /** 行业编号 */
+        industryCode: number;
+
+        /** 行业名称 */
+        industryName: string;
+
+        /** 上传文件url */
+        businessLicenseUrl: string;
+
+        /** 上传的营业执照名字 */
+        businessLicenseName: string;
+
+        /** 上传文件id */
+        businessLicenseId: number;
+
+        /** 企业联系人 */
+        contact: string;
+
+        /** 企业联系方式 */
+        contactNumber: string;
+    }
+
+    interface EnterpriseRentInfo {
+        /** 租赁楼宇id */
+        buildingId: number;
+
+        /** 开始日期 */
+        startTime: string;
+
+        /** 租赁结束日期 */
+        endTime: string;
+
+        /** 合同附件url */
+        contractUrl: string;
+
+        /** 合同附件id */
+        contractId: number;
+        /**操作类型，添加合同0，续签合同1 */
+        type: number;
+        /** 企业id */
+        enterpriseId: number;
+    }
+
+    interface ContractInfo {
+        /** 租赁楼宇id */
+        buildingId: number;
+
+        /** 开始日期 */
+        startTime: string;
+
+        /** 租赁结束日期 */
+        endTime: string;
+
+        /** 合同附件url */
+        contractUrl: string;
+
+        /** 合同附件id */
+        contractId: number;
+        /**操作类型，添加合同0，续签合同1 */
+        type: number;
+        /** 企业id */
+        enterpriseId: number;
+    }
+    interface RentInfo {
+        /** 租赁主键 */
+        id: string;
+        /** 企业id */
+        buildingId: string;
+        /** 楼宇名称 */
+        buildingName: string;
+
+        /** 租赁开始时间 */
+        startTime: string;
+
+        /** 租赁结束时间 */
+        endTime: string;
+
+        /** 合同的租赁状态0待生效1生效中2已到期3已退租 */
+        status: number;
+
+        /** 是否可以续租 */
+        renewFlag: number;
+
+        /** 是否可以退租 */
+        exitFlag: number;
+
+        status: number;
+    }
+
+    interface WarningHandle {
+        /** 告警id */
+        id: number;
+
+        /** 用户id */
+        userId: number;
+
+        /** 处理状态 */
+        handleStatus: string;
+    }
+
+
+    interface WarningSend {
+        /**告警id */
+        id: number;
+        /**处理人id */
+        userId: number;
+    }
+
+    interface BillInfo {
+        /** 主键id */
+        id: number;
+
+        /** 账单编号 */
+        billNumber: number;
+
+        /** 企业名称 */
+        enterpriseName: string;
+
+        /** 企业id */
+        enterpriseId: number;
+
+        /** 楼宇id */
+        buildingId: number;
+
+        /** 楼宇名称 */
+        buildingName: string;
+
+        /** 物业费价格 */
+        propertyFeePrice: number;
+
+        /** 缴费周期开始时间 */
+        startTime: string;
+
+        /** 缴费周期-结束时间 */
+        endTime: string;
+
+        /** 支付金额 */
+        paymentAmount: number;
+
+        /** 支付方式1微信2支付宝3现金 */
+        paymentMethod?: number;
+
+        /** 支付方式值：1微信2支付宝3现金 */
+        paymentMethodValue: string;
+
+        /** 缴费时间 */
+        createTime: string;
+    }
+
+
+    interface PropertyFeeInfo {
+        /** 企业id */
+        enterpriseId: number;
+
+        /** 楼宇id */
+        buildingId: number;
+
+        /** 缴费周期-开始时间 */
+        startTime: string;
+
+        /** 缴费周期-结束时间 */
+        endTime: string;
+
+        /** 付款总额 */
+        paymentAmount: number;
+
+        /** 付款方式1微信2支付宝3现金 */
+        paymentMethod: number;
+    }
+
+    interface PropertyFeeListQuery extends PageParams {
+        enterpriseName: string;
+        start: string;
+        end: string;
+    }
+
+
+
+    interface PaymentInfoQuery {
+        /** 楼宇id */
+        buildingId: number;
+        /**开始时间 */
+        startTime: string;
+        /**结束时间 */
+        endTime: string;
+    }
+
+
+    interface ParkingAreaInfo {
+        /** 区域id */
+        id: number;
+
+        /** 区域名称 */
+        areaName: string;
+
+        /** 车位数 */
+        spaceNumber: number;
+
+        /** 面积 */
+        areaProportion: number;
+
+        /** 关联计费规则ID */
+        ruleId: number;
+
+        /** 备注 */
+        remark?: string;
+    }
+
+
+    /**
+     * 文件上传返回信息
+     * @param {string} url 文件url
+     */
+
+    interface UploadFileResInfo {
+        /** 主键id */
+        id: number;
+
+        /** 上传文件名称 */
+        name: string;
+
+        /** 上传附件url */
+        url: string;
+    }
+
 }
+
+
+
+

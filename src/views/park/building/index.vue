@@ -10,8 +10,6 @@
                 </el-col>
             </el-row>
         </template>
-
-
         <el-table :data="buildingList" style="width: 100%">
             <el-table-column type="index" label="序号">
             </el-table-column>
@@ -28,8 +26,8 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template #default="{ row }">
-                    <el-button type="text" size="small">编辑</el-button>
-                    <el-button type="text" size="small">删除</el-button>
+                    <el-button type="text" size="small" @click="handleAction('edit', row)">编辑</el-button>
+                    <el-button type="text" size="small" @click="handleAction('edit', row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -70,6 +68,13 @@ const handleSizeChange = (val: number) => {
 const handleCurrentChange = (val: number) => {
     console.log(`当前页: ${val}`)
 }
+
+const handleAction = (flag: 'edit' | 'add', row: API.BuildingInfo) => {
+    console.log('row: ', row);
+    console.log(flag)
+}
+
+
 
 onMounted(() => {
     initGetBuildingList()

@@ -374,3 +374,20 @@ export const GetRoleUserList = (roleId: string, params: API.PageParams) => {
 
 
 
+/**
+ * 文件上传
+ * /upload
+ * body参数  
+ *     file 文件       
+ * type 参数  1:图片 2:文件 1、企业营业执照businessLicense2、租赁合同附件contract
+ */
+export const UploadFile = (data: FormData) => {
+    return request({
+        url: '/upload',
+        method: 'post',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        },
+        data
+    }) as Promise<API.Response<API.UploadFileResInfo>>
+}

@@ -526,7 +526,7 @@ export const GetBuildingDetail = (id: number) => {
 
 
 /**
- * 查询可租赁楼宇
+ * 查询可租赁楼宇 
  * /park/rent/building
  */
 
@@ -557,7 +557,185 @@ export const DetelePoleInfo = (ids: string) => {
 
 /**
  * 查看一体杆列表
+ * /pole/info/list
  */
+
+export const GetPoleInfoList = (params: API.PoleListQuery) => {
+    return request({
+        url: `/pole/info/list`,
+        method: 'get',
+        params
+    }) as Promise<API.Response<API.ResListType<API.PoleInfo>>>
+}
+
+/**
+ * 添加一体杆
+ * /pole/info
+ */
+
+export const PostPoleInfo = (data: API.PoleInfo) => {
+    return request({
+        url: `/pole/info`,
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 编辑一体杆
+ * /pole/info
+ */
+
+export const PutPoleInfo = (data: API.PoleInfo) => {
+    return request({
+        url: `/pole/info`,
+        method: 'put',
+        data
+    })
+}
+
+
+//=========================园区管理-企业管理========================
+
+/**
+ * 企业列表
+ * /park/enterprise
+ */
+
+
+export const GetEnterpriseList = (params: API.EnterpriseListQuery) => {
+    return request({
+        url: `/park/enterprise`,
+        method: 'get',
+        params
+    }) as Promise<API.Response<API.ResListType<API.EnterpriseBaseInfo>>>
+}
+
+
+/**
+ * 增加企业
+ * /park/enterprise
+ */
+
+export const PostEnterprise = (data: API.EnterpriseBaseInfo) => {
+    return request({
+        url: `/park/enterprise`,
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 编辑企业
+ * /park/enterprise
+ */
+
+export const PutEnterprise = (data: API.EnterpriseInfo) => {
+    return request({
+        url: `/park/enterprise`,
+        method: 'put',
+        data
+    })
+}
+
+
+/**
+ * 删除企业
+ * /park/enterprise/{id}
+ */
+
+export const DeleteEnterprise = (id: number) => {
+    return request({
+        url: `/park/enterprise/${id}`,
+        method: 'delete'
+    })
+}
+
+/**
+ * 企业租赁信息列表-展开查看
+ * /park/enterprise/rent/{id}
+ */
+
+export const GetEnterpriseRent = (id: number) => {
+    return request({
+        url: `/park/enterprise/rent/${id}`,
+        method: 'get'
+    })
+}
+
+
+/**
+ * 查询企业所属行业列表
+/park/industry
+ */
+
+
+export const GetEnterpriseIndustry = () => {
+    return request({
+        url: `/park/industry`,
+        method: 'get'
+    }) as Promise<API.Response<{
+        /**行业名称 */
+        industryName: string;
+        /**行业code */
+        industryCode: string;
+    }>>
+}
+
+
+/**
+ * 查看企业
+ * /park/enterprise/{id}
+ */
+
+export const GetEnterpriseDetail = (id: number) => {
+    return request({
+        url: `/park/enterprise/${id}`,
+        method: 'get'
+    })
+}
+
+
+
+/**
+ * 删除企业的租赁合同
+ * /park/enterprise/rent/{id}
+ */
+
+export const DeleteEnterpriseRent = (id: number) => {
+    return request({
+        url: `/park/enterprise/rent/${id}`,
+        method: 'delete'
+    })
+}
+
+/**
+ * 添加/续租企业的租赁合同
+ * /park/enterprise/rent
+ */
+
+
+export const PostEnterpriseRent = (data: API.EnterpriseRentInfo) => {
+    return request({
+        url: `/park/enterprise/rent`,
+        method: 'post',
+        data
+    })
+}
+
+/**
+ * 退租租赁合同
+ * /park/enterprise/rent/{id}
+ * Path
+ */
+
+export const PutEnterpriseRent = (id: string) => {
+    return request({
+        url: `/park/enterprise/rent/${id}`,
+        method: 'put'
+    })
+}
+
 
 
 
@@ -575,4 +753,272 @@ export const GetPoleWarningList = (params: API.WarningQueryParams) => {
         method: 'get',
         params
     }) as Promise<API.Response<API.ResListType<API.WarningInfo>>>
+}
+
+
+/**
+ * 删除告警记录
+ * /pole/warning/{id}
+ */
+
+export const DeletePoleWarning = (id: number) => {
+    return request({
+        url: `/pole/warning/${id}`,
+        method: 'delete'
+    })
+}
+
+
+
+/**
+ * 查看告警详情
+ *  /pole/warning/{id}
+ * 
+ */
+
+export const GetPoleWarningDetail = (id: number) => {
+    return request({
+        url: `/pole/warning/${id}`,
+        method: 'get'
+    })
+}
+
+/**
+ * 派单
+ * /pole/warning/handle
+ */
+
+
+export const PostPoleWarningHandle = (data: API.WarningHandle) => {
+    return request({
+        url: `/pole/warning/handle`,
+        method: 'post',
+        data
+    })
+}
+
+
+
+/**
+ * 派单
+ * /pole/warning/send
+ */
+
+
+
+export const PostPoleWarningSend = (data: API.WarningSend) => {
+    return request({
+        url: `/pole/warning/send`,
+        method: 'post',
+        data
+    })
+}
+
+
+//=========================物业费=======================
+
+
+/**
+ * 删除账单信息
+ * /park/propertyfee/{id}
+ */
+
+export const DeletePropertyFee = (id: number) => {
+    return request({
+        url: `/park/propertyfee/${id}`,
+        method: 'delete'
+    })
+}
+
+
+/**
+ * 查询所有企业
+ * /park/all/enterprise
+ */
+
+
+export const GetAllEnterprise = () => {
+    return request({
+        url: `/park/all/enterprise`,
+        method: 'get'
+    }) as Promise<API.Response<{
+        /**企业id */
+        id: number;
+        /**企业名称 */
+        name: string;
+    }[]>>
+}
+
+
+/**
+ * 查看账单详情
+ * /park/propertyfee/{id}
+ */
+
+export const GetPropertyFeeDetail = (id: number) => {
+    return request({
+        url: `/park/propertyfee/${id}`,
+        method: 'get'
+    })
+}
+
+
+/**
+ *  查询所有楼宇
+ * /park/all/building
+ */
+
+export const GetAllBuilding = () => {
+    return request({
+        url: `/park/all/building`,
+        method: 'get'
+    }) as Promise<API.Response<{
+        /**楼宇id */
+        id: number;
+        /**楼宇名称 */
+        name: string;
+    }[]>>
+}
+
+
+/**
+ * 添加账单
+ * /park/propertyfee
+ * 
+ */
+
+export const PostPropertyFee = (data: API.PropertyFeeInfo) => {
+    return request({
+        url: `/park/propertyfee`,
+        method: 'post',
+        data
+    })
+}
+
+
+/**
+ * 编辑账单
+ * /park/propertyfee
+ */
+
+export const PutPropertyFee = (data: API.PropertyFeeInfo & {
+    id: number | string
+}) => {
+    return request({
+        url: `/park/propertyfee`,
+        method: 'put',
+        data
+    })
+}
+
+/**
+ * 物业费列表
+ * /park/propertyfee
+ */
+
+export const GetPropertyFeeList = (params: API.PropertyFeeListQuery) => {
+    return request({
+        url: `/park/propertyfee`,
+        method: 'get',
+        params
+    }) as Promise<API.Response<API.ResListType<API.PropertyFeeInfo>>>
+}
+
+
+/**
+ * 预算金额
+ * /park/propertyfee/pre/payment
+ */
+
+
+export const GetPropertyFeePrePayment = (params: API.PaymentInfoQuery) => {
+
+    return request({
+        url: `/park/propertyfee/pre/payment`,
+        method: 'get',
+        params
+    }) as Promise<API.Response<{
+        /**预算金额 */
+        prePayment: number;
+    }>>
+}
+
+
+//=========================车行管理-区域管理-=======================
+
+
+/**
+ * 编辑区域
+ * /parking/area
+ */
+
+export const PutParkingAreaApi = (data: API.ParkingAreaInfo) => {
+    return request({
+        url: `/parking/area`,
+        method: 'put',
+        data
+    })
+}
+
+
+/**
+ * 查看区域列表
+ * /parking/area/list
+ */
+
+
+export const GetParkingAreaList = (params: API.PageParams) => {
+    return request({
+        url: `/parking/area/list`,
+        method: 'get',
+        params
+    }) as Promise<API.Response<API.ResListType<API.ParkingAreaInfo>>>
+}
+
+
+
+/**
+ * 添加区域
+ * /parking/area
+ */
+
+export const PostParkingAreaApi = (data: API.ParkingAreaInfo) => {
+    return request({
+        url: '/parking/area',
+        method: 'post',
+        data
+    }) as Promise<API.Response<API.ParkingAreaInfo>>
+}
+
+
+/**
+ * 获取关联区域下拉列表
+ * /parking/area/dropList
+ */
+
+export const GetParkingAreaDropList = () => {
+    return request({
+        url: `/parking/area/dropList`,
+        method: 'get'
+    }) as Promise<API.Response<{
+        /**区域id */
+        areaId: number;
+        /**区域名称 */
+        areaName: string;
+    }[]>
+    >
+}
+
+
+/**
+ * 删除区域
+ * /parking/area/{id}
+ */
+
+
+export const DeleteParkingArea = (id: number) => {
+    return request({
+        url: `/parking/area/${id}`,
+        method: 'delete'
+    })
 }

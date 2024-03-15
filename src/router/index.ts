@@ -1,5 +1,5 @@
 import { App } from "vue";
-import { RouteRecordRaw, createRouter, createWebHashHistory } from "vue-router";
+import { RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory } from "vue-router";
 import { StaticRoutes } from "./staticRoutes";
 import { getTokenFromLocal } from "@/utils/auth";
 import { useAuthStore, useRouteStore } from "@/store";
@@ -9,7 +9,7 @@ const WHITE_LIST = ['/login', '/404']
 
 const customRouter = () => {
     return createRouter({
-        history: createWebHashHistory(),
+        history: createWebHistory(),
         //平滑滚动
         scrollBehavior: (to, from, savedPosition) => {
             return { top: 0 };

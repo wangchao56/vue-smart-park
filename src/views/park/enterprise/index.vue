@@ -1,52 +1,147 @@
 <template>
-    <el-card>
-        <el-table :data="enterpriseList" style="width: 100%">
-            <el-table-column type="index" label="序号"></el-table-column>
-            <el-table-column prop="name" label="楼宇名称"></el-table-column>
-            <el-table-column prop="area" label="在管面积(m²)"></el-table-column>
-            <el-table-column prop="propertyFeePrice" label="物业费(元/m²)"></el-table-column>
-            <el-table-column prop="status" label="状态">
-
-                <template #default="{ row }">
-                    <el-tag v-if="row.status === 1" type="danger">租赁中</el-tag>
-                    <el-tag v-else type="success">空置中</el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column label="操作">
-                <template #default="{ row }">
-                    <el-button type="text" size="small">编辑</el-button>
-                    <el-button type="text" size="small">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-
-        <template #footer>
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :page-size="10"
-                layout="total, sizes, prev, pager, next, jumper" :total="1000"></el-pagination>
+    <BaseTable ref="tableRef" :data-source="enterpriseList" title="企业" :columns="columns" :total="total"
+        :currentPage="currentPage" @searchAction="searchActionHandler" @modelAction="modelActionHandler"
+        @expandAction="expandActionHandler">
+        >
+        <template #action="{ row }">
+            <el-button type="text" size="small" @click="modelActionHandler('contract', row)">添加合同</el-button>
+            <el-button type="text" size="small" @click="modelActionHandler('detail', row)">查看</el-button>
+            <el-button type="text" size="small" @click="modelActionHandler('edit', row)">编辑</el-button>
+            <el-button type="text" size="small" @click="modelActionHandler('del', row)">删除</el-button>
         </template>
-    </el-card>
+        <template #expand="{ row }">
+            <el-table row-class-name="cus-row" :data="row.rentList" :header-cell-style="{
+        background: '#f4f6f8'
+    }">
+                <el-table-column prop="buildingName" label="租赁楼宇">
+                </el-table-column>
+                <el-table-column label="租赁起止时间">
+                    <template #default="{ row }">
+                        {{ row.startTime }} 至 {{ row.endTime }}
+                    </template>
+                </el-table-column>
+                <el-table-column prop="status" label="合同状态">
+                    <template #default="{ row }">
+                        <el-tag v-if="row.status === 1" type="success">生效中</el-tag>
+                        <el-tag v-else type="primary">待生效</el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作">
+                    <template #default="{ row }">
+                        <el-button text size="small" @click="handleRelet">续租</el-button>
+                        <el-button text size="small" @click="hanleOffLease">退租</el-button>
+                        <el-button text size="small" disabled @click="handleDelRent">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+        <!-- 表单 -->
+        <template #formContent>
+            <AddContract />
+        </template>
+    </BaseTable>
 </template>
 
-<script setup lang='ts'>
+<script setup lang='tsx'>
+import {
+    GetEnterpriseList,
+    PostEnterprise,
+    PutEnterprise,
+    GetEnterpriseDetail,
+    GetEnterpriseRent
 
-const enterpriseList = ref<API.EnterpriseInfo[]>([])
+} from '@/services'
+import BaseTable, { type ColumnType } from '@/components/BaseTable.vue';
+import AddContract from './addcontract/index.vue'
+
+interface EnterpriseInfo extends API.EnterpriseBaseInfo {
+    index: number;
+    rentList: API.RentInfo[];
+}
+const enterpriseList = ref<EnterpriseInfo[]>([])
+const tableRef = ref<any>()
+
+watch(
+    () => tableRef.value,
+    (value) => {
+        console.log(value);
+    }
+
+)
+
+const columns: ColumnType[] = [
+    {
+        type: 'expand',
+        prop: 'expand',
+        label: '展开',
+    },
+    {
+        label: '序号',
+        type: 'index',
+        prop: 'index',
+        width: 80
+    },
+    {
+        label: '企业名称',
+        formType: 'input',
+        rules: [
+            { required: true, message: '请输入企业名称', trigger: 'blur' }
+        ],
+        prop: 'name',
+        search: true
+    },
+    {
+        label: '联系人',
+        prop: 'contact',
+        formType: 'input',
+
+    },
+    {
+        label: '联系电话',
+        prop: 'contactNumber',
+        formType: 'input',
+        render: (row: API.EnterpriseBaseInfo) => {
+            return row.contactNumber
+        }
+    },
+    {
+        label: '操作',
+        prop: 'action',
+    }
+
+]
+
+const total = ref(0)
+
+const params = reactive<Record<string, any>>({
+    page: '1',
+    pageSize: '10',
+    name: ''
+})
+
+const contactForm = reactive<Record<string, any>>({
+    name: '',
+    contact: '',
+    contactNumber: ''
+})
+
 
 const initGetEnterpriseList = async () => {
-    const params: API.EnterpriseListQuery = {
-        page: '1',
-        pageSize: '10'
-    }
     const res = await GetEnterpriseList(params)
-
     console.log(res)
-    enterpriseList.value = (res.data.rows || []).map((item: API.EnterpriseInfo, index) => {
+    enterpriseList.value = (res.data.rows || []).map((item: API.EnterpriseBaseInfo, index) => {
         return {
             ...item,
-            index: index + 1
+            index: index + 1,
+            rentList: []
         }
     })
 }
+
+
+watchEffect(() => {
+    initGetEnterpriseList()
+})
 
 const currentPage = ref(1)
 
@@ -57,6 +152,118 @@ const handleCurrentChange = (val: number) => {
     console.log(`当前页: ${val}`)
 }
 
+const searchActionHandler = (_params: Record<string, any>) => {
+    params.name = _params.name
+}
+//租赁信息数据
+const rentList = ref<API.RentInfo[]>([])
+
+
+//***需要优化
+const expandActionHandler = async (row: EnterpriseInfo) => {
+    //如果有租赁信息则不再请求
+    if (row.rentList && row.rentList.length) {
+        rentList.value = row.rentList
+        return
+    }
+    //获取租赁信息
+    const res = await GetEnterpriseRent(row.id)
+    rentList.value = res.data || []
+    //找到baseTableRef
+    enterpriseList.value = enterpriseList.value.map((item) => {
+        if (item.id === row.id) {
+            item.rentList = rentList.value
+        }
+        return item
+    })
+}
+
+const modelActionHandler = (flag: string, params?: API.EnterpriseBaseInfo) => {
+    switch (flag) {
+        case 'add':
+            console.log('添加')
+            break;
+        case 'edit':
+            console.log('编辑')
+            handleEdit(params)
+            break;
+        case 'del':
+            console.log('删除')
+            break;
+        case 'detail':
+            console.log('查看')
+            handleDetail(params)
+            break;
+        case 'contract':
+            console.log('添加合同')
+            handleContract(params)
+            break;
+    }
+}
+//续租
+const handleRelet = () => {
+    console.log('续租')
+}
+
+//退租
+const hanleOffLease = () => {
+    console.log('退租')
+}
+
+//删除租赁信息
+const handleDelRent = () => {
+    console.log('删除租赁信息')
+}
+
+
+//删除 
+const handleDel = async (row: API.EnterpriseBaseInfo) => {
+    console.log(row)
+}
+
+//编辑
+
+const handleEdit = async (row: API.EnterpriseBaseInfo) => {
+    console.log(row)
+    console.log(tableRef.value);
+}
+
+//添加合同
+const handleContract = async (row: API.EnterpriseBaseInfo) => {
+    tableRef.value.handleOpenModel('添加合同')
+    console.log(row)
+}
+
+
+//查看
+const handleDetail = async (row: API.EnterpriseBaseInfo) => {
+    if (!tableRef.value) return
+    tableRef.value.handleOpenDrawer()
+    const res = await GetEnterpriseDetail(row.id)
+    console.log(res)
+}
+
 </script>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+:deep(.el-table__expanded-cell) {
+    padding-top: 0;
+    position: relative;
+    padding-left: 48px;
+    background: '#f4f6f8';
+    background-clip: padding-box
+}
+
+
+
+
+:deep(.el-table__expanded-cell::before) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 100%;
+    content: '';
+    background-color: #f4f6f8;
+}
+</style>
