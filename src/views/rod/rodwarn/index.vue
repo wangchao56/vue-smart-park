@@ -1,11 +1,18 @@
 <template>
 
     <div class="rodmanage">
-        <h1>rodmanag123e</h1>
+        <BaseTable />
     </div>
 </template>
 
 <script setup lang='ts'>
+import BaseTable from '@/components/BaseTable.vue'
+
+
+
+
+
+
 
 </script>
 

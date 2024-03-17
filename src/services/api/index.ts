@@ -121,7 +121,8 @@ export const GetCarYearRevenue = () => {
 首页大屏缴费记录(不分页)
 /parking/statistics/paymentList
  */
-export const GetCarPaymentList = () => {
+
+export const GetWorkbenchPaymentList = () => {
     return request({
         url: '/parking/statistics/paymentList',
         method: 'get'

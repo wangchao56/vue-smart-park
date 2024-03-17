@@ -49,7 +49,7 @@ export const GetCarCardList = (params: API.ShowCarMonthCard) => {
         url: `/parking/card/list`,
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.ResListType<API.MonthCardInfo>>>
 }
 
 
@@ -150,7 +150,7 @@ export const GetCarPaymentList = (params: API.CarPaymentListQuery) => {
         url: `/parking/payment/list`,
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.ResListType<API.CarPaymentInfo>>>
 }
 
 
@@ -177,7 +177,7 @@ export const GetCarRuleList = () => {
     return request({
         url: `/parking/rule/list`,
         method: 'get'
-    })
+    }) as Promise<API.Response<API.ResListType<API.CarRuleDetail>>>
 }
 
 

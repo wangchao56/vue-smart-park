@@ -252,6 +252,40 @@ namespace API {
         demoFlag: number;
     }
 
+
+    /**
+     * 停车缴费 
+     */
+
+    interface CarPaymentInfo {
+        /** 0:可删改，1:不可删改 */
+        demoFlag: number;
+
+        /** 缴费id */
+        id: number;
+
+        /** 车牌号 */
+        carNumber: string;
+
+        /** 收费类型:月卡card,临时停车:temp */
+        chargeType: string;
+
+        /** 停车时间 */
+        parkingTime: string;
+
+        /** 停车费 */
+        actualCharge: number;
+
+        /** 缴费状态 */
+        paymentStatus: string;
+
+        /** 缴费时间 */
+        paymentTime: string | null;
+
+        /** 缴费方式支付方式,支付宝:Alipay,微信:WeChat,线下:Cash */
+        paymentMethod: string;
+    }
+
     /**
  * 员工信息
  */

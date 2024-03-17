@@ -3,8 +3,6 @@
         <HeaderLayout />
     </div>
 
-
-
 </template>
 
 <script setup lang='ts'>

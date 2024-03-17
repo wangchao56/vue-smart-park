@@ -4,19 +4,22 @@
 
 <script setup lang='ts'>
 import BaseTable, { ColumnType } from '@/components/BaseTable.vue';
-import { GetPoleInfoList } from '@/services';
+import { GetPropertyFeeList } from '@/services';
 
 
 
-const dataSource = ref<API.PoleInfo[]>([]);
-const params = reactive<API.PoleListQuery>({
+const dataSource = ref<API.PropertyFeeInfo[]>([]);
+const params = reactive<API.PropertyFeeListQuery>({
     page: '1',
     pageSize: '10',
+    enterpriseName: '',
+    start: '',
+    end: ''
 }); // 查询参数
 
 
 const initDataSource = async () => {
-    const res = await GetPoleInfoList(params);
+    const res = await GetPropertyFeeList(params);
     dataSource.value = res.data.rows;
 };
 
@@ -26,27 +29,27 @@ onMounted(() => {
 
 const columns: ColumnType[] = [
     {
-        label: '一体杆名称',
+        label: '账单编号',
         prop: 'billNumber',
     },
     {
-        label: '一体杆编号',
+        label: '企业名称',
         prop: 'enterpriseName',
     },
     {
-        label: '一体杆IP',
+        label: '租赁楼宇',
         prop: 'buildingName',
     },
     {
-        label: '安装区域',
+        label: '物业费(元/m²)',
         prop: 'propertyFeePrice',
     },
     {
-        label: '一体杆类型',
+        label: '账单金额(元)',
         prop: 'paymentAmount',
     },
     {
-        label: '运行状态',
+        label: '缴费时间',
         prop: 'createTime',
     },
     {

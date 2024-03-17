@@ -2,7 +2,7 @@
     <el-card style="width: 100%">
         <template #header>
             <!-- 搜索 -->
-            <el-form :inline="true" :model="searchModel">
+            <el-form :inline="true" :model="searchModel" v-if="props.showSearch">
                 <el-form-item v-for="item in searchOptions" :label="item.label" :key="item.prop">
                     <el-input v-model="searchModel[item.prop]" :type="item.formType" :placeholder="`请输入${item.label}`"
                         clearable />
@@ -15,10 +15,8 @@
             <el-button type="primary" @click="handleModel('add')">新增{{ props.title }}</el-button>
         </template>
         <!-- 表格 -->
-        <el-table ref="baseTableRef" style="width: 100%" :header-cell-style="{
-                background: '#f4f6f8'
-            }" border :data="dataSource" @expand-change="handleExpand">
-
+        <el-table ref="baseTableRef" style="width: 100%" :header-cell-style="{ background: '#f4f6f8' }" border
+            :data="dataSource" @expand-change="handleExpand">
             <template v-for="col in columns" :key="col.prop">
                 <el-table-column v-if="col.prop === 'action'" label="操作" fixed="right">
                     <template #default="{ row }">
@@ -99,6 +97,7 @@ const props = defineProps<{
     formRules?: any;
     total: number;
     title: string;
+    showSearch?: boolean;
 }>();
 
 // slot 传递
