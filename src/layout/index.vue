@@ -98,6 +98,7 @@ const routeStore = useRouteStore();
 
     .el-main {
         background-color: #f3f3f3;
+        overflow-x: hidden !important;
         overflow-y: auto !important;
     }
 

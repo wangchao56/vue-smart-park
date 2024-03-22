@@ -21,7 +21,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         }]
     },
     {
-        path: '/parking',
+        path: '/car',
         component: Layout,
         meta: { order: 3, permission: 'parking', title: '行车管理', icon: 'el-icon-guide' },
         children: [{
@@ -70,5 +70,15 @@ export const asyncRoutes: RouteRecordRaw[] = [
             component: () => import('@/views/system/employee/index.vue'),
             meta: { permission: 'sys:user', title: '员工管理' }
         }]
+    },
+    {
+        path: '/car/:mode', // 动态路由 
+        component: () => import('@/views/car/carcard/formModel/index.vue'),
+        meta: { permission: 'parking:card', title: '添加月卡' }
+    },
+    {
+        path: '/car/:mode/:id', // 动态路由 
+        component: () => import('@/views/car/carcard/formModel/index.vue'),
+        meta: { permission: 'parking:card', title: '编辑月卡' }
     }
 ]

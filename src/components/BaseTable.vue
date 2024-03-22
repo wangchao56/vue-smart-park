@@ -2,22 +2,32 @@
     <el-card style="width: 100%">
         <template #header>
             <!-- 搜索 -->
-            <el-form :inline="true" :model="searchModel" v-if="props.showSearch">
+            <el-form :inline="true" :model="searchModel" v-if="props.showSearch" class="custom-form-inline">
                 <el-form-item v-for="item in searchOptions" :label="item.label" :key="item.prop">
-                    <el-input v-model="searchModel[item.prop]" :type="item.formType" :placeholder="`请输入${item.label}`"
-                        clearable />
+                    <!-- 如果formType为select -->
+                    <el-select v-if="item.formType && item.options" v-model="searchModel[item.prop]" value-key="value"
+                        placeholder="请选择">
+                        <el-option v-for="option in item.options" :key="option.value" :label="option.label"
+                            :value="option.value" />
+                    </el-select>
+                    <el-input v-else v-model="searchModel[item.prop]" :type="item.formType"
+                        :placeholder="`请输入${item.label}`" clearable />
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="searchAction">查询</el-button>
                 </el-form-item>
             </el-form>
             <!-- 新增 -->
-            <el-button type="primary" @click="handleModel('add')">新增{{ props.title }}</el-button>
+            <el-space>
+                <slot name="actionbtn"></slot>
+            </el-space>
+
         </template>
         <!-- 表格 -->
         <el-table ref="baseTableRef" style="width: 100%" :header-cell-style="{ background: '#f4f6f8' }" border
-            :data="dataSource" @expand-change="handleExpand">
+            :data="dataSource" @expand-change="handleExpand" @selection-change="handleSelectionChange">
             <template v-for="col in columns" :key="col.prop">
+                <!-- 操作 -->
                 <el-table-column v-if="col.prop === 'action'" label="操作" fixed="right">
                     <template #default="{ row }">
                         <slot name="action" :row="row"></slot>
@@ -30,6 +40,9 @@
                         <slot name="expand" :row="row"></slot>
                     </template>
                 </el-table-column>
+                <!-- 多选 -->
+                <el-table-column v-else-if="col.type === 'selection'" :type="col?.type" :width="col.width"
+                    :fixed="col.fixed" />
                 <el-table-column v-else :type="col?.type" :prop="col.prop" :label="col.label" :width="col.width"
                     :fixed="col.fixed">
                     <template #default="{ row }">
@@ -56,16 +69,17 @@
             </el-descriptions>-->
         </el-drawer>
         <!-- 新增/编辑 -->
-        <el-dialog v-model="openModel" :title="dialogTitle" width="580" :before-close="handleClose">
+        <el-dialog v-model="openModel" class="form-dialog" :title="dialogTitle" width="580" :before-close="handleClose">
             <!-- 表单接口 -->
             <slot v-if="slots.formContent" name="formContent"></slot>
-            <el-form v-else ref="modelFormRef" :model="formModal" :rules="props.formRules" label-width="80px">
+            <!-- <el-form v-else ref="modelFormRef" :model="formModal" :rules="props.formRules" label-position="top"
+                label-width="80px">
                 <el-form-item v-for="item in formOptions" :label="item.label" :prop="item.prop" :rules="item.rules">
                     <el-input v-model="formModal[item.prop]" :type="item.formType" :placeholder="`请输入${item.label}`" />
                 </el-form-item>
-            </el-form>
+            </el-form> -->
             <template #footer>
-                <el-button size="small" type="primary" @click="handleFormAction(modelFormRef)">确 定</el-button>
+                <el-button size="small" type="primary" @click="handleFormAction(formFlag)">确定</el-button>
                 <el-button size="small" @click="handleClose">取 消</el-button>
             </template>
         </el-dialog>
@@ -74,7 +88,7 @@
 
 
 <script setup lang='ts' generic="T extends Record<string,any>">
-import { FormInstance } from 'element-plus';
+import type { ElTable } from "element-plus";
 
 export interface ColumnType {
     prop?: string;
@@ -85,18 +99,38 @@ export interface ColumnType {
     formType?: string;
     /**搜索 */
     search?: boolean;
+    options?: {
+        label: string;
+        value: string | number;
+        default?: boolean;
+    }[];
     /**详情显示 */
     show?: boolean;
     rules?: any;
     render?: (row: any) => void;
 }
 
+export interface Handlers<U> {
+    handleOpenModel: (title: string, type: 'add' | 'edit') => void;
+    handleCloseModel: () => void;
+    handleCloseDrawer: () => void;
+    handleOpenDrawer: () => void;
+    handleEdit: (params: U) => void;
+    baseTableRef: any; // 请根据实际情况替换为正确的类型
+}
+
+//编辑类型
+type EditType = 'add' | 'edit'
+
+
+
 const props = defineProps<{
     dataSource: T[];
     columns: ColumnType[];
     formRules?: any;
-    total: number;
-    title: string;
+    total?: number;
+    title?: string;
+    addBtnTitle?: string;
     showSearch?: boolean;
 }>();
 
@@ -104,29 +138,36 @@ const props = defineProps<{
 const slot = defineSlots<{
     default(props: any): any,
     action(props: Record<string, any>): any,
-    formContent(props: any): any,
-    expand(props: Record<string, any>): any
+    formContent(): any,
+    expand(props: Record<string, any>): any,
+    actionbtn(): any
 }>()
 
 const slots = useSlots()
-const baseTableRef = ref<any>()
+const baseTableRef = ref<InstanceType<typeof ElTable>>()
+
+watch(() => baseTableRef.value, (val) => {
+    console.log(val);
+})
 
 type Emits = {
     'searchAction': [Record<string, any>],
     'modelAction': ['add' | 'edit' | 'del', T | undefined],
     //展开
     'expandAction': [Record<string, any>]
+    //表单弹窗确认操作
+    'formAction': [EditType | 'close']
+    'batchAction': [T[]]
 }
 
+//表单编辑的标志 add  edit 
+const formFlag = ref<EditType>('add')
 //emit 
 const emit = defineEmits<Emits>()
 const openDrawer = ref<boolean>(false)
 const openModel = ref<boolean>(false)
-const modelFormRef = ref<FormInstance>(null)
 let pageSize = ref<number>(10)
-
 const descriptionData = reactive<T>(Object({}))
-
 const handleSizeChange = (val: number) => {
     pageSize.value = val
 }
@@ -136,7 +177,14 @@ const searchOptions = computed(() => {
     const temp = props.columns.filter((item: ColumnType) => item.search)
     //提取出搜索项 
     searchModel.value = temp.reduce((prev: Record<string, any>, current: ColumnType) => {
-        prev[current.prop] = ''
+        prev[current.prop] = '';
+        //默认值
+        if (current.options) {
+            const defaultOption = current.options.find(item => item.default)
+            if (defaultOption) {
+                prev[current.prop] = defaultOption.value
+            }
+        }
         return prev
     }, {})
     return temp
@@ -160,26 +208,20 @@ const total = ref<number>(0)
 const currentPage = ref<number>(1)
 
 //打开model表单
-const handleOpenModel = (title: string) => {
+const handleOpenModel = (title: string, type: EditType) => {
     openModel.value = true
     dialogTitle.value = title
-
+    formFlag.value = type
 }
-
+const handleCloseModel = () => {
+    openModel.value = false
+}
 //打开详情
 const handleOpenDrawer = () => {
     openDrawer.value = true
 }
-
-const handleFormAction = (formRef: FormInstance) => {
-    formRef.validate((valid: boolean) => {
-        if (valid) {
-            console.log('submit!');
-        } else {
-            console.log('error submit!!');
-            return false;
-        }
-    });
+const handleFormAction = (type: EditType | 'close') => {
+    emit('formAction', type)
 }
 
 const params = reactive<API.PageParams & {
@@ -192,6 +234,7 @@ const params = reactive<API.PageParams & {
 
 const handleClose = () => {
     openModel.value = false
+    handleFormAction('close')
 }
 
 const handleCurrentChange = (val: number) => {
@@ -225,14 +268,25 @@ const handleModel = (flag: 'add' | 'edit' | 'del') => {
     emit('modelAction', flag, undefined)
 }
 
-defineExpose({
+
+const handleSelectionChange = (val: T[]) => {
+    console.log(val);
+    emit('batchAction', val)
+}
+
+
+defineExpose<Handlers<T>>({
     handleOpenModel,
     handleOpenDrawer,
+    handleCloseModel,
+    handleCloseDrawer: () => {
+        openDrawer.value = false
+    },
     //编辑表单时传递数据
-    handleEdit: <U>(params: U) => {
+    handleEdit: (params: T) => {
         console.log(params);
         formModal = params
-        handleOpenModel('编辑' + props.title)
+        handleOpenModel('编辑' + props.title, 'edit')
     },
     baseTableRef
 })
@@ -271,5 +325,18 @@ defineExpose({
 /*2.按钮已点击展开之后的样式是减号带边框*/
 :deep(.el-table__expand-icon--expanded>.el-icon::before) {
     content: url('@/assets/images/subtract-on.png');
+}
+
+.custom-form-inline {
+    .el-select {
+        --el-select-width: 120px;
+    }
+
+}
+
+:deep(.form-dialog) {
+    .el-dialog__body {
+        padding: 20px 100px !important;
+    }
 }
 </style>

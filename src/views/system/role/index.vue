@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang='ts'>
-
+import * as services from '@/services';
 </script>
-
 <style lang='scss' scoped></style>

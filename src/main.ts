@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import './styles/index.scss'
 import 'element-plus/theme-chalk/dark/css-vars.css';
 import 'element-plus/es/components/message/style/css';
-import './styles/index.scss'
+import 'element-plus/theme-chalk/el-message-box.css'
 import installStore from './store' // 挂载store
 import services from './services' // 挂载service
 import router from './router'

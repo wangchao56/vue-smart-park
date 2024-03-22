@@ -26,8 +26,8 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template #default="{ row }">
-                    <el-button type="text" size="small" @click="handleAction('edit', row)">编辑</el-button>
-                    <el-button type="text" size="small" @click="handleAction('edit', row)">删除</el-button>
+                    <el-button text type="primary" size="small" @click="handleAction('edit', row)">编辑</el-button>
+                    <el-button text type="primary" size="small" @click="handleAction('edit', row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>

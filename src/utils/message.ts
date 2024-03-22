@@ -1,4 +1,4 @@
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 
 
@@ -45,6 +45,23 @@ class Message {
         ElMessage.closeAll()
     }
 
+    //警告提示
+    warning(message: string) {
+        ElMessage.warning(message)
+    }
+
+    //操作提示
+    async reminder(message: string) {
+        const result = await ElMessageBox.confirm(
+            message,
+            {
+                confirmButtonText: '确认',
+                cancelButtonText: '取消',
+                type: 'warning',
+            }
+        )
+        return result;
+    }
 
 }
 

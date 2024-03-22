@@ -132,11 +132,13 @@ export const PostCarCardRenew = (data: API.RenewalInfo) => {
  */
 
 
-export const DeleteCarCard = (ids: number[]) => {
+export const DeleteCarCard = (ids: (number | string)[]) => {
+    //多个id用逗号隔开
+    const idsStr = ids.join(',')
     return request({
-        url: `/parking/card/${ids}`,
+        url: `/parking/card/${idsStr}`,
         method: 'delete'
-    })
+    }) as Promise<API.Response<null>>
 }
 
 
@@ -957,7 +959,7 @@ export const PutParkingAreaApi = (data: API.ParkingAreaInfo) => {
         url: `/parking/area`,
         method: 'put',
         data
-    })
+    }) as Promise<API.Response<API.ParkingAreaInfo>>
 }
 
 
@@ -1016,9 +1018,9 @@ export const GetParkingAreaDropList = () => {
  */
 
 
-export const DeleteParkingArea = (id: number) => {
+export const DeleteParkingArea = (id: number | string) => {
     return request({
         url: `/parking/area/${id}`,
         method: 'delete'
-    })
+    }) as Promise<API.Response<null>>
 }

@@ -53,8 +53,8 @@
                                 :prop="item.key">
                                 <template #default="{ row }">
                                     <span v-if="item.dataIndex === 'operation'">
-                                        <el-button type="text" size="small">编辑</el-button>
-                                        <el-button type="text" size="small">删除</el-button>
+                                        <el-button text type="primary" size="small">编辑</el-button>
+                                        <el-button text type="primary" size="small">删除</el-button>
                                     </span>
                                     <span v-else>{{ row[item.dataIndex] }}</span>
                                 </template>
@@ -81,7 +81,7 @@
 
                                 <el-space :size="24">
                                     <p>{{ item.errorType }} </p>
-                                    <el-button type="text" size="small">编辑
+                                    <el-button text type="primary" size="small">编辑
                                         <el-icon>
                                             <DArrowRight />
                                         </el-icon>

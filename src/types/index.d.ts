@@ -1,5 +1,3 @@
-
-// Path: src/typings/index.ts
 namespace API {
     interface Response<T = any> {
         code: number;
@@ -227,7 +225,7 @@ namespace API {
         /** 车主姓名 */
         personName?: string;
         /** 状态 0:可用，1:已过期 */
-        cardStatus?: number;
+        cardStatus?: number | string;
     }
 
     /**
@@ -342,16 +340,16 @@ namespace API {
         carBrand: string;
 
         /** 有效时间开始 */
-        cardStartDate: string;
+        cardStartDate: string | Date;
 
         /** 有效时间结束 */
-        cardEndDate: string;
+        cardEndDate: string | Date;
 
         /** 支付金额 */
         paymentAmount: string;
 
         /** 支付方式 */
-        paymentMethod: 'Alipay' | 'WeChat' | 'Cash';
+        paymentMethod: 'Alipay' | 'WeChat' | 'Cash' | string;
 
         /** 月卡车辆id */
         carInfoId?: number;
@@ -832,19 +830,19 @@ namespace API {
 
     interface ParkingAreaInfo {
         /** 区域id */
-        id: number;
+        id?: number;
 
         /** 区域名称 */
         areaName: string;
 
         /** 车位数 */
-        spaceNumber: number;
+        spaceNumber: number | string;
 
         /** 面积 */
-        areaProportion: number;
+        areaProportion: number | string;
 
         /** 关联计费规则ID */
-        ruleId: number;
+        ruleId: number | string;
 
         /** 备注 */
         remark?: string;

@@ -1,13 +1,16 @@
 <template>
-    <BaseTable ref="tableRef" :data-source="enterpriseList" title="企业" :columns="columns" :total="total"
-        :currentPage="currentPage" @searchAction="searchActionHandler" @modelAction="modelActionHandler"
+    <BaseTable ref="tableRef" :data-source="enterpriseList" title="企业" :columns="columns" :show-search="true"
+        :total="total" :currentPage="currentPage" @searchAction="searchActionHandler" @modelAction="modelActionHandler"
         @expandAction="expandActionHandler">
         >
+        <template #actionbtn>
+            <el-button type="primary" @click="modelActionHandler('add')">添加企业</el-button>
+        </template>
         <template #action="{ row }">
-            <el-button type="text" size="small" @click="modelActionHandler('contract', row)">添加合同</el-button>
-            <el-button type="text" size="small" @click="modelActionHandler('detail', row)">查看</el-button>
-            <el-button type="text" size="small" @click="modelActionHandler('edit', row)">编辑</el-button>
-            <el-button type="text" size="small" @click="modelActionHandler('del', row)">删除</el-button>
+            <el-button text type="primary" size="small" @click="modelActionHandler('contract', row)">添加合同</el-button>
+            <el-button text type="primary" size="small" @click="modelActionHandler('detail', row)">查看</el-button>
+            <el-button text type="primary" size="small" @click="modelActionHandler('edit', row)">编辑</el-button>
+            <el-button text type="primary" size="small" @click="modelActionHandler('del', row)">删除</el-button>
         </template>
         <template #expand="{ row }">
             <el-table row-class-name="cus-row" :data="row.rentList" :header-cell-style="{
@@ -45,7 +48,6 @@
 <script setup lang='tsx'>
 import {
     GetEnterpriseList,
-    PostEnterprise,
     PutEnterprise,
     GetEnterpriseDetail,
     GetEnterpriseRent
@@ -94,7 +96,6 @@ const columns: ColumnType[] = [
         label: '联系人',
         prop: 'contact',
         formType: 'input',
-
     },
     {
         label: '联系电话',
@@ -189,6 +190,7 @@ const modelActionHandler = (flag: string, params?: API.EnterpriseBaseInfo) => {
             break;
         case 'del':
             console.log('删除')
+            handleDel(params)
             break;
         case 'detail':
             console.log('查看')
