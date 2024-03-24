@@ -18,11 +18,11 @@ export const GetCarRuleDetail = (id: number) => {
  * /parking/card/detail/{id}
  */
 
-export const GetCarCardDetail = (id: number) => {
+export const GetCarCardDetail = (id: number | string) => {
     return request({
         url: `/parking/card/detail/${id}`,
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarCardInfo>>
 }
 
 
@@ -31,11 +31,11 @@ export const GetCarCardDetail = (id: number) => {
  * /parking/card/edit/{id}
  */
 
-export const GetCarCardEdit = (id: number) => {
+export const GetCarCardEdit = (id: number | string) => {
     return request({
         url: `/parking/card/edit/${id}`,
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarCardInfo>>
 }
 
 /**
@@ -58,11 +58,11 @@ export const GetCarCardList = (params: API.ShowCarMonthCard) => {
     * /parking/card/{id}
  */
 
-export const GetCarCard = (id: number) => {
+export const GetCarCard = (id: number | string) => {
     return request({
         url: `/parking/card/${id}`,
         method: 'get'
-    })
+    }) as Promise<API.Response<API.GetCardDetallInfo>>
 }
 
 
@@ -91,7 +91,7 @@ export const PostCarCard = (data: API.CarCardInfo) => {
         url: `/parking/card`,
         method: 'post',
         data
-    })
+    }) as Promise<API.Response<null>>
 }
 
 
@@ -107,7 +107,7 @@ export const PutCarCard = (data: API.CarCardInfo) => {
         url: `/parking/card`,
         method: 'put',
         data
-    })
+    }) as Promise<API.Response<null>>
 }
 
 
@@ -122,7 +122,7 @@ export const PostCarCardRenew = (data: API.RenewalInfo) => {
         url: `/parking/card/renew`,
         method: 'post',
         data
-    })
+    }) as Promise<API.Response<null>>
 }
 
 

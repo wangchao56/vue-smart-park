@@ -188,10 +188,9 @@ namespace API {
     }
 
     /**
-     * 月卡详情
-     */
-
-    interface CarCardDetail {
+ * 基础信息接口，包含了人名、手机号、车牌号和车辆品牌
+ */
+    interface BasicInfo {
         /** 人名 */
         personName: string;
         /** 手机号 */
@@ -200,12 +199,18 @@ namespace API {
         carNumber: string;
         /** 车辆品牌 */
         carBrand: string;
+    }
+
+    /**
+     * 月卡详情接口，继承了基础信息接口，并添加了月卡的详细信息
+     */
+    interface CarCardDetail extends BasicInfo {
         /** 卡开始日期 */
         cardStartDate: string;
         /** 卡结束日期 */
         cardEndDate: string;
         /** 支付方式 */
-        paymentMethod: string;
+        paymentMethod: 'Alipay' | 'WeChat' | 'Cash' | string;
         /** 支付金额 */
         paymentAmount: number;
         /** 车辆信息ID */
@@ -217,6 +222,83 @@ namespace API {
     }
 
     /**
+     * 充值信息接口，包含了充值的详细信息
+     */
+    interface Recharge {
+        /** 充值ID */
+        rechargeId: number;
+        /** 卡开始日期 */
+        cardStartDate: string;
+        /** 卡结束日期 */
+        cardEndDate: string;
+        /** 支付方式 */
+        paymentMethod: string;
+        /** 支付金额 */
+        paymentAmount: number;
+        /** 创建时间 */
+        createTime: string;
+        /** 创建用户 */
+        createUser: string;
+    }
+
+    /**
+     * 获取卡详细信息接口，继承了基础信息接口，并添加了充值列表
+     */
+    interface GetCardDetallInfo extends BasicInfo {
+        /** 车辆信息ID */
+        carInfoId: number;
+        /** 充值列表 */
+        rechargeList: Recharge[];
+    }
+    /**
+     * 月卡信息接口，继承了基础信息接口，并添加了月卡的基本信息
+     */
+    interface MonthCardInfo extends BasicInfo {
+        /** ID */
+        id: number;
+        /** 总有效日期 */
+        totalEffectiveDate: number;
+        /** 卡状态 */
+        cardStatus: number;
+        /** 演示标志 */
+        demoFlag: number;
+    }
+    /**
+    * 车主信息
+    */
+    interface CarCardInfo extends BasicInfo {
+        /** 有效时间开始 */
+        cardStartDate: string | Date | number;
+        /** 有效时间结束 */
+        cardEndDate: string | Date | number;
+        /** 支付金额 */
+        paymentAmount: string;
+        /** 支付方式 */
+        paymentMethod: 'Alipay' | 'WeChat' | 'Cash' | string;
+        /** 月卡车辆id */
+        carInfoId?: number;
+        /** 缴费信息id */
+        rechargeId?: number;
+    }
+
+    /**
+     * 月卡续费信息
+     */
+    interface RenewalInfo {
+        /** 起始有效时间 */
+        cardStartDate: string;
+        /** 截止有效时间 */
+        cardEndDate: string;
+        /** 支付金额 */
+        paymentAmount: string;
+        /** 支付方式 */
+        paymentMethod: 'Alipay' | 'WeChat' | 'Cash' | string;
+        /** 月卡车辆id */
+        carInfoId: number | string;
+    }
+
+
+    /**
      * 查看月卡信息 参数
      */
     interface ShowCarMonthCard extends PageParams {
@@ -226,28 +308,6 @@ namespace API {
         personName?: string;
         /** 状态 0:可用，1:已过期 */
         cardStatus?: number | string;
-    }
-
-    /**
-     * 月卡信息
-     */
-    interface MonthCardInfo {
-        /** ID */
-        id: number;
-        /** 人名 */
-        personName: string;
-        /** 手机号 */
-        phoneNumber: string;
-        /** 车牌号 */
-        carNumber: string;
-        /** 车辆品牌 */
-        carBrand: string;
-        /** 总有效日期 */
-        totalEffectiveDate: number;
-        /** 卡状态 */
-        cardStatus: number;
-        /** 演示标志 */
-        demoFlag: number;
     }
 
 
@@ -323,60 +383,6 @@ namespace API {
 
     }
 
-    /**
-     * 车主信息
-     */
-    interface CarCardInfo {
-        /** 车主姓名 */
-        personName: string;
-
-        /** 联系方式 */
-        phoneNumber: string;
-
-        /** 车牌号码 */
-        carNumber: string;
-
-        /** 车辆品牌 */
-        carBrand: string;
-
-        /** 有效时间开始 */
-        cardStartDate: string | Date;
-
-        /** 有效时间结束 */
-        cardEndDate: string | Date;
-
-        /** 支付金额 */
-        paymentAmount: string;
-
-        /** 支付方式 */
-        paymentMethod: 'Alipay' | 'WeChat' | 'Cash' | string;
-
-        /** 月卡车辆id */
-        carInfoId?: number;
-
-        /** 缴费信息id */
-        rechargeId?: number;
-    }
-
-    /**
-     * 月卡续费信息
-     */
-    interface RenewalInfo {
-        /** 起始有效时间 */
-        cardStartDate: string;
-
-        /** 截止有效时间 */
-        cardEndDate: string;
-
-        /** 支付金额 */
-        paymentAmount: string;
-
-        /** 支付方式 */
-        paymentMethod: 'Alipay' | 'WeChat' | 'Cash';
-
-        /** 月卡车辆id */
-        carInfoId: number;
-    }
 
     /**
      * 停车缴费列表查询参数
