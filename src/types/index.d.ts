@@ -11,8 +11,8 @@ namespace API {
         age?: number;
     }
     interface PageParams {
-        page?: string;
-        pageSize?: string;
+        page?: string | number;
+        pageSize?: string | number;
     }
     /** 用户信息(角色 ) */
     interface UserProfile {
@@ -593,7 +593,7 @@ namespace API {
 
     interface PoleInfo {
         /** 一体杆id */
-        id: number;
+        id?: number | string;
         /** 一体杆编号 */
         poleNumber: string;
         /** 一体杆名称 */

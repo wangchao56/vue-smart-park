@@ -365,12 +365,12 @@ export const GetAllPermission = () => {
  *  @param  parmas { page: string, pageSize: string }
  */
 
-export const GetRoleUserList = (roleId: string, params: API.PageParams) => {
+export const GetRoleUserList = (roleId: string | number, params: API.PageParams) => {
     return request({
         url: `/park/sys/roleUser/${roleId}`,
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.ResListType<API.UserProfile>>>
 }
 
 

@@ -15,7 +15,6 @@
             <el-button class="addBtn">添加角色</el-button>
         </div>
 
-
         <div class="right-wrapper">
             <el-tabs v-model="activeName">
                 <el-tab-pane label="功能权限" name="tree">
@@ -93,28 +92,24 @@ async function getRoleDetail() {
             node.setCheckedKeys(unref(rolePermissionList)[index])
         })
     })
-
 }
-
 //获取角色成员列表
-const getRoleUserListHandler = async () => {
-    const res = 
+const getRoleUserListHandler = async (roleId: string | number) => {
+    const _params = {
+        page: 1,
+        pageSize: 10,
+    }
+    const res = await GetRoleUserList(roleId, _params)
+    roleUserList.value = res.data.rows
 }
-
-
-
 
 //切换角色
 function changeRole(index: number) {
     activeIndex.value = index;
     roleId.value = roleList.value[index].roleId
     getRoleDetail()
-
-
-
-
-
-    console.log('changeRole');
+    //获取角色成员列表
+    getRoleUserListHandler(roleId.value)
 }
 
 
