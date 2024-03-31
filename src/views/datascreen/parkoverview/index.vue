@@ -1,6 +1,6 @@
 <template>
     <!-- 园区概况 -->
-    <el-card class="box-card" body-style="padding-bottom: 50px;">
+    <div class="box-card" body-style="padding-bottom: 50px;">
         <el-row>
             <el-col :span="6" v-for="item in  dataList" :key="item.label">
                 <div class="grid-conten">
@@ -10,7 +10,7 @@
                 </div>
             </el-col>
         </el-row>
-    </el-card>
+    </div>
 </template>
 
 <script setup lang='ts'>

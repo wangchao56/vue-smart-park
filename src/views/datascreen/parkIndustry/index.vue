@@ -4,25 +4,22 @@
             <img :src="HeaderSrc" />
         </div>
         <div class="content">
-            <EchartsComp :option="barOptions" />
+            <EchartsComp :option="options" />
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
 import EchartsComp from '@/components/EchartComp.vue'
-import { computed, ref } from 'vue';
+import { computed} from 'vue';
 import HeaderSrc from '@/assets/images/园区产业分布@2x.png'
 
 const props = defineProps<{
     data: API.ParkIndustryItem[]
 }>()
 
-const parkIndustry = computed(() => {
-    return props.data
-})
-
-const barOptions = ref({
+const options = computed(() =>{
+    return {
     color: [
         '#00B2FF', '#2CF2FF', '#892CFF', '#FF624D', '#FFCF54', '#86ECA2'],
     legend: {
@@ -54,12 +51,12 @@ const barOptions = ref({
                 show: false,
                 position: 'center',
             },
-            data: parkIndustry.value,
+            data: props.data,
         },
     ],
 
 }
-) 
+}) 
 </script>
 
 <style lang='scss' scoped>
@@ -79,7 +76,7 @@ const barOptions = ref({
     }
 
     .content {
-        height: 300px;
+        height: 260px;
     }
 }
 </style>

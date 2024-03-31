@@ -1,36 +1,72 @@
 <template>
-    <div id="datascreen">
-        <el-container>
-            <el-header>
+    <el-container id="datascreen">
+        <el-header>
+            <div class="screen-logo">
                 <img :src="LogoSrc" />
-
-                <div class="right-menu">
-                    <button class="park-all"></button>
-                    <button class="car-admin"></button>
-                </div>
-            </el-header>
-            <el-main>
+            </div>
+            <div class="right-menu">
+                <button class="park-all" @click="switchPark('park')" :class="{ active: flag === 'park' }"></button>
+                <button class="car-admin" @click="switchPark('car')" :class="{ active: flag === 'car' }"></button>
+            </div>
+        </el-header>
+        <Transition name="fade">
+            <el-main v-if="flag === 'park'">
                 <el-row>
-                    <el-col :span="6">
+                    <el-col :span="6" class="park-overview-container">
                         <Parkoverview :data="parkoverviewData" />
                         <Parkyearincome :data="parkIncome" />
                         <Parkindustry :data="parkIndustry" />
                     </el-col>
-                    <el-col :span="18">
+                    <el-col :span="22" :offset="2">
+                        <ModelRender />
                     </el-col>
                 </el-row>
             </el-main>
-        </el-container>
-
-    </div>
+            <el-main v-else>
+                <el-row>
+                    <el-col :span="8" class="car-admin-container">
+                        <Carsituation />
+                        <Carspaceuse />
+                    </el-col>
+                    <el-col :span="8" class="car-admin-container">
+                        <CarmonthRevenue />
+                        <CartypeProportion />
+                        <CaryearRevenue />
+                    </el-col>
+                    <el-col :span="8" class="car-admin-container">
+                        <CarPaymentList />
+                    </el-col>
+                </el-row>
+            </el-main>
+        </Transition>
+    </el-container>
 </template>
 <script setup lang='ts'>
 import Parkoverview from './parkoverview/index.vue';
 import Parkyearincome from './parkyearincome/index.vue';
 import Parkindustry from './parkIndustry/index.vue';
+import ModelRender from './ModelRender/index.vue';
+import CarPaymentList from './carpaymentList/index.vue';
+import CarmonthRevenue from './carmonthRevenue/index.vue';
+import Carsituation from './carsituation/index.vue';
+import Carspaceuse from './carspaceuse/index.vue';
+import CartypeProportion from './cartypeProportion/index.vue';
+import CaryearRevenue from './caryearRevenue/index.vue';
+
 import autofit from 'autofit.js'
 import LogoSrc from '@/assets/images/datascreen-logo.png'
 import { GetParkStatisticsInfo } from '@/services'
+//获取可视区域宽高
+
+const { width, height } = window.screen;
+console.log(width, height);
+
+
+// 获取园区总览
+const flag = ref('park');
+const switchPark = (type: string) => {
+    flag.value = type;
+}
 const parkoverviewData = ref({
     buildingTotal: 100,
     enterpriseTotal: 100,
@@ -38,7 +74,7 @@ const parkoverviewData = ref({
     chargePoleTotal: 100
 });
 
-const parkIncome = ref<API.ParkIncomeData>({
+let parkIncome = reactive<API.ParkIncomeData>({
     xMonth: [],
     yIncome: []
 })
@@ -55,7 +91,7 @@ onMounted(async () => {
     const { data } = await GetParkStatisticsInfo();
     console.log(data);
     parkoverviewData.value = data.base;
-    parkIncome.value = data.parkIncome;
+    parkIncome = data.parkIncome;
     parkIndustry.value = data.parkIndustry;
 });
 
@@ -73,29 +109,70 @@ onMounted(async () => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 40px;
+    padding-top: 16px;
+    margin-bottom: 20px;
+}
+
+.el-main {
+    overflow: hidden;
+    height: calc(100vh - 60px);
 }
 
 .park-all,
 .car-admin {
-    width: 192px;
-    height: 60px;
+    width: 128px;
+    height: 32px;
     outline: none;
     border: none;
     border: 0;
     cursor: pointer;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
 }
 
 .right-menu {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
 }
 
 .park-all {
+    background: #000 url(@/assets/images/park-default.png);
+
+}
+
+.park-all.active {
     background: #000 url(@/assets/images/park-active.png);
+
+
 }
 
 .car-admin {
     background: #000 url(@/assets/images/car-default.png);
+}
+
+.car-admin.active {
+    background: #000 url(@/assets/images/car-active.png);
+}
+
+.screen-logo {
+    width: 400px;
+}
+
+.park-overview-container {
+    position: fixed;
+    top: 60px;
+    left: 30px;
+    z-index: 999;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    row-gap: 16px;
+    // 背景高斯模糊
+    background: rgba(0, 0, 0, 0.5);
+    /* 背景色 */
 }
 </style>

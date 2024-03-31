@@ -58,7 +58,7 @@ export const getCurrentUserRoutes = () => {
  * /parking/statistics/charge/typeProportion
  */
 
-export const GetCarPayInfo = () => {
+export const GetCartypeProportion = () => {
     return request({
         url: '/parking/statistics/charge/typeProportion',
         method: 'get'
