@@ -2,7 +2,8 @@
     <el-card style="width: 100%">
         <template #header>
             <!-- 搜索 -->
-            <el-form :inline="true" :model="searchModel" v-if="props.showSearch" class="custom-form-inline">
+            <el-form :inline="true" action="#" @submit.native.prevent :model="searchModel" v-if="props.showSearch"
+                class="custom-form-inline">
                 <el-form-item v-for="item in searchOptions" :label="item.label" :key="item.prop">
                     <!-- 如果formType为select -->
                     <el-select v-if="item.formType && item.options" v-model="searchModel[item.prop]" value-key="value"
@@ -13,7 +14,8 @@
                     <el-input v-else v-model="searchModel[item.prop]" :type="item.formType"
                         :placeholder="`请输入${item.label}`" clearable />
                 </el-form-item>
-                <el-form-item>
+
+                <el-form-item type="submit">
                     <el-button type="primary" @click="searchAction">查询</el-button>
                 </el-form-item>
             </el-form>
@@ -21,7 +23,6 @@
             <el-space>
                 <slot name="actionbtn"></slot>
             </el-space>
-
         </template>
         <!-- 表格 -->
         <el-table ref="baseTableRef" style="width: 100%" :header-cell-style="{ background: '#f4f6f8' }" border
@@ -119,8 +120,6 @@ export interface Handlers<U> {
     baseTableRef: any; // 请根据实际情况替换为正确的类型
 }
 
-//编辑类型
-type EditType = 'add' | 'edit'
 
 
 
@@ -156,12 +155,12 @@ type Emits = {
     //展开
     'expandAction': [Record<string, any>]
     //表单弹窗确认操作
-    'formAction': [EditType | 'close']
+    'formAction': [UTIL.FormActionType]
     'batchAction': [T[]]
 }
 
 //表单编辑的标志 add  edit 
-const formFlag = ref<EditType>('add')
+const formFlag = ref<UTIL.FormActionType>('add')
 //emit 
 const emit = defineEmits<Emits>()
 const openDrawer = ref<boolean>(false)
@@ -208,7 +207,7 @@ const total = ref<number>(0)
 const currentPage = ref<number>(1)
 
 //打开model表单
-const handleOpenModel = (title: string, type: EditType) => {
+const handleOpenModel = (title: string, type: UTIL.FormActionType) => {
     openModel.value = true
     dialogTitle.value = title
     formFlag.value = type
@@ -220,7 +219,7 @@ const handleCloseModel = () => {
 const handleOpenDrawer = () => {
     openDrawer.value = true
 }
-const handleFormAction = (type: EditType | 'close') => {
+const handleFormAction = (type: UTIL.FormActionType) => {
     emit('formAction', type)
 }
 
@@ -244,7 +243,6 @@ const handleCurrentChange = (val: number) => {
 const searchAction = () => {
     emit('searchAction', searchModel.value)
 }
-
 
 const pageChange = (val: number) => {
     params.page = val.toString()

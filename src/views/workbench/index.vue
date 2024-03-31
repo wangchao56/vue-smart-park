@@ -106,7 +106,6 @@
 import { GetCarBuildingInfo, GetWorkbenchInfo, GetWorkbenchRentInfo, GetPoleWarningList } from '@/services';
 import { ref } from 'vue'
 import { EChartsOption } from 'echarts';
-
 import carIcon from '@/assets/images/1.png'
 import buildingIcon from '@/assets/images/2.png'
 import enterpriseIcon from '@/assets/images/3.png'
@@ -312,7 +311,7 @@ const quickEntry = [
     {
         name: '数据大屏',
         icon: parkingIcon,
-        path: '/parking'
+        path: '/datascreen'
     },
 ]
 

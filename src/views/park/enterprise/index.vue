@@ -51,9 +51,8 @@ import {
     PutEnterprise,
     GetEnterpriseDetail,
     GetEnterpriseRent
-
 } from '@/services'
-import BaseTable, { type ColumnType } from '@/components/BaseTable.vue';
+import BaseTable, { Handlers, type ColumnType } from '@/components/BaseTable.vue';
 import AddContract from './addcontract/index.vue'
 
 interface EnterpriseInfo extends API.EnterpriseBaseInfo {
@@ -61,7 +60,7 @@ interface EnterpriseInfo extends API.EnterpriseBaseInfo {
     rentList: API.RentInfo[];
 }
 const enterpriseList = ref<EnterpriseInfo[]>([])
-const tableRef = ref<any>()
+const tableRef = ref<Handlers<EnterpriseInfo>>()
 
 watch(
     () => tableRef.value,
@@ -162,6 +161,8 @@ const rentList = ref<API.RentInfo[]>([])
 
 //***需要优化
 const expandActionHandler = async (row: EnterpriseInfo) => {
+
+    console.log(row);
     //如果有租赁信息则不再请求
     if (row.rentList && row.rentList.length) {
         rentList.value = row.rentList
@@ -180,21 +181,26 @@ const expandActionHandler = async (row: EnterpriseInfo) => {
 }
 
 const modelActionHandler = (flag: string, params?: API.EnterpriseBaseInfo) => {
+
+    const { handleOpenModel, handleOpenDrawer } = unref(tableRef)
     switch (flag) {
         case 'add':
             console.log('添加')
+            handleOpenModel('添加企业', 'add')
             break;
         case 'edit':
             console.log('编辑')
+            handleOpenModel('编辑企业', 'add')
             handleEdit(params)
             break;
-        case 'del':
+        case 'delete':
             console.log('删除')
             handleDel(params)
             break;
         case 'detail':
             console.log('查看')
             handleDetail(params)
+            handleOpenDrawer()
             break;
         case 'contract':
             console.log('添加合同')

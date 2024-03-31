@@ -11,6 +11,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.21)
+  autofit.js:
+    specifier: ^3.1.0
+    version: 3.1.0
   axios:
     specifier: ^1.6.7
     version: 1.6.7
@@ -1075,6 +1078,10 @@ packages:
 
   /asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+    dev: false
+
+  /autofit.js@3.1.0:
+    resolution: {integrity: sha512-zX/2VbpxdDcgDDCT1A0psuF8Phs8QbmFXstvLkqrrOcv33LQttCh2J6GVs84585+LfMAfacemxRXIidrFXu02g==}
     dev: false
 
   /axios@1.6.7:

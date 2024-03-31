@@ -469,7 +469,7 @@ export const PutBuilding = (data: API.BuildingInfo) => {
         url: `/park/building`,
         method: 'put',
         data
-    })
+    }) as Promise<API.Response<null>>;
 }
 
 
@@ -493,11 +493,11 @@ export const GetBuildingList = (params: API.BuildingListQuery) => {
  * 租赁中的楼宇不能删除
  */
 
-export const DeleteBuilding = (id: number) => {
+export const DeleteBuilding = (id: number | string) => {
     return request({
         url: `/park/building/${id}`,
         method: 'delete'
-    })
+    }) as Promise<API.Response<null>>
 }
 
 
@@ -511,7 +511,7 @@ export const PostBuilding = (data: API.BuildingInfo) => {
         url: `/park/building`,
         method: 'post',
         data
-    })
+    }) as Promise<API.Response<null>>
 }
 
 /**

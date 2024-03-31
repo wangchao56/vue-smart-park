@@ -38,12 +38,11 @@
 </template>
 
 <script setup lang='ts'>
-import BaseTable, { ColumnType, Handlers } from '@/components/BaseTable.vue';
+import BaseTable, { Handlers } from '@/components/BaseTable.vue';
 import { GetParkingAreaList, PostParkingAreaApi, DeleteParkingArea, PutParkingAreaApi } from '@/services';
 import { addIndex } from '@/utils';
 import { FormInstance } from 'element-plus';
 import { message } from '@/utils';
-
 
 const params: API.PageParams = {
     page: '1',
@@ -54,7 +53,7 @@ const dataSource = ref<API.ParkingAreaInfo[]>([]);
 
 const tableRef = ref<Handlers<Record<string, any>>>();
 
-const columns: ColumnType[] = [
+const columns: UTIL.ColumnType[] = [
     {
         type: 'index',
         prop: 'index',
@@ -95,13 +94,25 @@ const columns: ColumnType[] = [
 ];
 
 const modelFormRef = ref<FormInstance>();
-let formModal = reactive<API.ParkingAreaInfo>({
+let formModal = ref<API.ParkingAreaInfo>({
     areaName: '',
     spaceNumber: '',
     areaProportion: '',
     ruleId: '',
     remark: '',
 });
+
+const createFormData = (params?: API.ParkingAreaInfo) => {
+    formModal.value = {
+        id: params.id || '',
+        areaName: params.areaName || '',
+        remark: params.remark || '',
+        areaProportion: params.areaProportion || '',
+        ruleId: params.ruleId || '',
+        spaceNumber: params.spaceNumber || '',
+    };
+
+};
 
 const ruleOptions = [
     { ruleId: 1, ruleName: '按分钟计费' },
@@ -130,17 +141,11 @@ const handleAction = (type: string, row: API.ParkingAreaInfo) => {
     switch (type) {
         case 'add':
             unref(tableRef).handleOpenModel('添加区域', type);
-            formModal = {
-                areaName: '',
-                spaceNumber: '',
-                areaProportion: '',
-                ruleId: '',
-                remark: '',
-            };
+            createFormData()
             break;
         case 'edit':
             unref(tableRef).handleOpenModel('编辑区域', type);
-            formModal = { ...row };
+            createFormData(row)
             break;
         case 'delete':
             handleDelete(row);
@@ -149,8 +154,6 @@ const handleAction = (type: string, row: API.ParkingAreaInfo) => {
 };
 
 const formActionHandler = async (type: string) => {
-    console.log('type: ', type);
-    console.log(unref(modelFormRef));
     if (type === 'close') {
         //清除表单验证
         unref(modelFormRef).clearValidate();
@@ -159,12 +162,13 @@ const formActionHandler = async (type: string) => {
     try {
         //表单验证
         const valid = await unref(modelFormRef).validate();
+        if (!valid) return;
         switch (type) {
             case 'add':
-                handleAdd(formModal);
+                handleAdd(formModal.value);
                 break;
             case 'edit':
-                handleEdit(formModal);
+                handleEdit(formModal.value);
                 break;
         }
     } catch (error) {
@@ -175,8 +179,9 @@ const formActionHandler = async (type: string) => {
 };
 
 //添加操作
-const handleAdd = async (params: API.ParkingAreaInfo) => {
-    const res = await PostParkingAreaApi(params);
+const handleAdd = async (record: API.ParkingAreaInfo) => {
+    const { id, ..._params } = record;
+    const res = await PostParkingAreaApi(_params);
     console.log('res: ', res);
     if (res.code === 10000) {
         message.success('添加成功');
@@ -204,7 +209,6 @@ const handleEdit = async (params: API.ParkingAreaInfo) => {
 
 //删除操作
 const handleDelete = async (row: API.ParkingAreaInfo) => {
-    console.log('删除操作', row);
     //弹窗确认
     try {
         const result = await message.reminder('是否确认删除该区域？');

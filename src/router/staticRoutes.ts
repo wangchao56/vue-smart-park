@@ -43,37 +43,11 @@ const StaticRoutes: RouteRecordRaw[] = [
             },
         ],
     },
-    // {
-    //     path: "/park",
-    //     component: Layout,
-    //     meta: {
-    //         title: "园区管理",
-    //         permissions: "park",
-    //         icon: "el-icon-office-building",
-    //     },
-    //     children: [
-    //         {
-    //             path: "building",
-    //             name: "ParkList",
-    //             component: () => import("@/views/park/building/index.vue"),
-    //             meta: {
-    //                 title: "楼宇管理",
-    //                 icon: "el-icon-",
-    //                 permissions: "park:building",
-    //             },
-    //         },
-    //         {
-    //             path: "enterprise",
-    //             name: "ParkDetail",
-    //             component: () => import("@/views/park/enterprise/index.vue"),
-    //             meta: {
-    //                 title: "企业管理",
-    //                 icon: "el-icon-s-home",
-    //                 permissions: "park:enterprise",
-    //             },
-    //         },
-    //     ],
-    // },
+    {
+        path: "/datascreen",
+        name: "datascreen",
+        component: () => import("@/views/datascreen/index.vue"),
+    },
     // 404
     {
         path: "/:pathMatch(.*)*",

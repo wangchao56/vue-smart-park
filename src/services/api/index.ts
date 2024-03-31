@@ -1,6 +1,7 @@
 import request from "../request"
 
 export * from './carManagement'
+export * from './datascreen'
 
 /**
  *  登录接口
@@ -242,7 +243,7 @@ export const AddUser = (data: API.AddUserParams, headers: API.ResquestHeaders) =
         method: 'post',
         data,
         headers
-    }) as Promise<API.Response>
+    }) as Promise<API.Response<null>>
 }
 
 
@@ -257,7 +258,7 @@ export const UpdateUser = (data: API.AddUserParams, headers: API.ResquestHeaders
         method: 'put',
         data,
         headers
-    })
+    }) as Promise<API.Response<null>>
 }
 
 /**

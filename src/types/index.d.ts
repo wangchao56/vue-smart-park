@@ -1,3 +1,7 @@
+//引入 UTIL
+
+
+
 namespace API {
     interface Response<T = any> {
         code: number;
@@ -31,6 +35,9 @@ namespace API {
 
     /** 添加用户 */
     interface AddUserParams {
+
+        /** 主键 */
+        id?: string | numebr;
         /**用户名 */
         name: string;
         /**用户角色id */
@@ -515,21 +522,21 @@ namespace API {
  */
     interface BuildingInfo {
         /** id主键 */
-        id: number;
+        id?: number | string;
 
         /** 楼宇名称 */
         name: string;
 
         /** 层数 */
-        floors: number;
+        floors: number | string;
 
         /** 在管面积 */
-        area: number;
+        area: number | string;
 
         /** 物业费单价 */
-        propertyFeePrice: number;
+        propertyFeePrice: number | string;
         /** 状态 */
-        status: number;
+        status?: number;
     }
 
 
@@ -836,7 +843,7 @@ namespace API {
 
     interface ParkingAreaInfo {
         /** 区域id */
-        id?: number;
+        id?: number | string;
 
         /** 区域名称 */
         areaName: string;
@@ -870,9 +877,64 @@ namespace API {
         /** 上传附件url */
         url: string;
     }
+    interface BaseInfo {
+        buildingTotal: number;
+        enterpriseTotal: number;
+        chargePoleTotal: number;
+        parkingTotal: number;
+    }
+    interface ParkIncomeData {
+        xMonth: string[];
+        yIncome: number[];
+    }
+    interface ParkIndustryItem {
+        name: string;
+        value: number;
+    }
+    /**
+     * 楼宇概况 收入和产业信息
+     */
+    interface ParkStatisticsInfo {
+        base: BaseInfo;
+        parkIncome: ParkIncomeData;
+        parkIndustry: ParkIndustryItem[];
+    }
 
+    interface AreaStatistics {
+        id: number;
+        areaName: string;
+        totalSpaceNum: number;
+        occupancySpaceNum: number;
+        remainSpaceNum: number;
+        spaceProportion: number;
+        areaProportion: number;
+    }
 }
 
 
+namespace UTIL {
+    interface ColumnType {
+        prop?: string;
+        label?: string;
+        align?: string;
+        unit?: string;
+        width?: number;
+        fixed?: string;
+        type?: string;
+        formType?: string;
+        /**搜索 */
+        search?: boolean;
+        options?: {
+            label: string;
+            value: string | number;
+            default?: boolean;
+        }[];
+        /**详情显示 */
+        show?: boolean;
+        rules?: any;
+        render?: (row: any) => void;
+    }
 
 
+    type FormActionType = 'add' | 'edit' | 'detail' | 'close' | 'delete';
+}
