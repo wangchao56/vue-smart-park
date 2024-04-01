@@ -909,6 +909,21 @@ namespace API {
         spaceProportion: number;
         areaProportion: number;
     }
+
+    interface CarMonthRevenue {
+        cardRevenue: number;
+        cardRevenueTrend: 'increase' | 'reduce';
+        parkingRevenue: number;
+        parkingRevenueTrend: 'increase' | 'reduce';
+        totalRevenue: number;
+    }
+
+    interface CarTypeProportion {
+        cardProportion: number;
+        tempProportion: number;
+    }
+
+
 }
 
 

@@ -62,7 +62,7 @@ export const GetCartypeProportion = () => {
     return request({
         url: '/parking/statistics/charge/typeProportion',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarTypeProportion>>
 }
 
 /**
@@ -102,7 +102,7 @@ export const GetCarMonthRevenue = () => {
     return request({
         url: '/parking/statistics/monthRevenue',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarMonthRevenue>>
 }
 
 /**
@@ -127,7 +127,7 @@ export const GetWorkbenchPaymentList = () => {
     return request({
         url: '/parking/statistics/paymentList',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.ResListType<API.CarPaymentInfo>>>
 }
 
 

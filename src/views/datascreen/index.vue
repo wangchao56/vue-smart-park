@@ -63,7 +63,7 @@ console.log(width, height);
 
 
 // 获取园区总览
-const flag = ref('park');
+const flag = ref('car');
 const switchPark = (type: string) => {
     flag.value = type;
 }
@@ -174,5 +174,13 @@ onMounted(async () => {
     // 背景高斯模糊
     background: rgba(0, 0, 0, 0.5);
     /* 背景色 */
+}
+
+.el-row {
+    height: 100% !important;
+}
+
+.car-admin-container {
+    height: 100%;
 }
 </style>
