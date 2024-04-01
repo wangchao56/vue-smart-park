@@ -943,7 +943,39 @@ namespace API {
         monthList: string[];
         revenueList: number[]
     }
+    interface CarBuildingInfo {
+        // 主键ID，必须存在且唯一
+        id: number;
+        // 楼宇名称，不能为空字符串
+        name: string;
+        // 楼宇总层数，必须为大于0的数字
+        floors: number;
+        // 在管总面积，必须为非负数字
+        area: number;
+        // 物业费单价，必须为有效数字
+        propertyFeePrice: number;
+        // 楼宇状态，必须为0（空置中）或1（租赁中）
+        status: 0 | 1;
+        // 承租单位名称，可为空字符串
+        rentEnterpriseName?: string; // 使用问号表示可选字段
+    }
 
+    interface CarAreaDetail {
+        // 区域ID，必填项
+        id: number;
+        // 区域名称，必填项
+        areaName: string;
+        // 总车位数，必填项
+        totalSpaceNum: number;
+        // 已占用车位数，必填项
+        occupancySpaceNum: number;
+        // 剩余车位数，必填项
+        remainSpaceNum: number;
+        // 车位占有率，即已占用车位数占总车位数的比例，必填项
+        spaceProportion: number;
+        // 区域面积，单位可根据实际情况定义（如平方米），必填项
+        areaProportion: number; // 此处字段名与描述中的"areaProportion"不符，假设应为"area"
+    }
 
 }
 
@@ -973,4 +1005,20 @@ namespace UTIL {
 
 
     type FormActionType = 'add' | 'edit' | 'detail' | 'close' | 'delete';
+
+    interface CusOptions {
+        top: {
+            attr: string;
+        };
+        children: {
+            attr: string;
+            label: string;
+            unit?: string;
+            render?: (row: any) => string;
+        }[];
+        btn: {
+            attr: string;
+            render?: (row: any) => string;
+        }
+    }
 }

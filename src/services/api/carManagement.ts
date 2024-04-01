@@ -232,11 +232,11 @@ export const GetCarRuleDropList = () => {
  */
 
 
-export const GetCarAreaDetail = (id: number) => {
+export const GetCarAreaDetail = (id: string) => {
     return request({
         url: `/parking/area/${id}`,
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarAreaDetail>>;
 }
 
 
@@ -252,7 +252,8 @@ export const GetCarBuilding = (params: {
         url: `/park/statistics/building`,
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.CarBuildingInfo>>;
+
 }
 
 

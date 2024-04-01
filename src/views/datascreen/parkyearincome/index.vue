@@ -4,6 +4,14 @@
             <img :src="HeaderSrc" />
         </div>
         <div class="content">
+            <div class="content-header">
+                <span>单位: 元</span>
+                <p>
+                    <span class="color" :style="{ background: '#74c0f8' }"></span>
+                    <span class="color" :style="{ background: '#ff7152' }"></span>
+                    <span>收入情况</span>
+                </p>
+            </div>
             <EchartsComp :option="barOptions" />
         </div>
     </div>
@@ -103,7 +111,28 @@ watch(() => props.data, () => {
     }
 
     .content {
-        height: 300px;
+        width: 100%;
+        height: 350px;
+        box-sizing: border-box;
+        padding: 0 8px 16px;
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 20px;
+
+            .color {
+                width: 16px;
+                height: 8px;
+                display: inline-block;
+
+                &:nth-of-type(2) {
+                    margin-right: 8px;
+                }
+            }
+
+        }
     }
 }
 </style>

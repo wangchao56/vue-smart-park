@@ -40,7 +40,6 @@ const handleCurrentChange = async (val: number) => {
 }
 const init = async () => {
     const res = await GetCarAreaInfo(params.value);
-    ;
     const { code, data } = res;
     if (code === 10000) {
         carAreaInfo.value = data.rows;

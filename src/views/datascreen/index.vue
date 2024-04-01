@@ -13,12 +13,20 @@
             <el-main v-if="flag === 'park'">
                 <el-row>
                     <el-col :span="6" class="park-overview-container">
-                        <Parkoverview :data="parkoverviewData" />
-                        <Parkyearincome :data="parkIncome" />
-                        <Parkindustry :data="parkIndustry" />
+                        <div class="park-overview_item">
+                            <Parkoverview :data="parkoverviewData" />
+                        </div>
+                        <div class="park-overview_item">
+                            <Parkyearincome :data="parkIncome" />
+                        </div>
+                        <div class="park-overview_item">
+                            <Parkindustry :data="parkIndustry" />
+                        </div>
                     </el-col>
                     <el-col :span="22" :offset="2">
-                        <ModelRender />
+                        <KeepAlive include="ModelRender">
+                            <ModelRender />
+                        </KeepAlive>
                     </el-col>
                 </el-row>
             </el-main>
@@ -110,6 +118,7 @@ onMounted(async () => {
     height: 100vh;
     overflow: hidden;
     background-color: #000;
+    color: #fff;
 }
 
 .el-header {
@@ -118,7 +127,7 @@ onMounted(async () => {
     align-items: center;
     height: 40px;
     padding-top: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .el-main {
@@ -170,7 +179,7 @@ onMounted(async () => {
 
 .park-overview-container {
     position: fixed;
-    top: 60px;
+    top: 64px;
     left: 30px;
     z-index: 999;
     width: 100%;
@@ -181,6 +190,16 @@ onMounted(async () => {
     // 背景高斯模糊
     background: rgba(0, 0, 0, 0.5);
     /* 背景色 */
+
+    display: flex;
+    flex-direction: column;
+
+    .park-overview_item {
+        width: 100%;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
 }
 
 .el-row {
@@ -194,6 +213,7 @@ onMounted(async () => {
         width: 100%;
         margin-bottom: 16px;
         box-sizing: border-box;
+        overflow: hidden;
     }
 }
 </style>
