@@ -91,22 +91,22 @@ const columns: ColumnType[] = [
 
 //添加
 const handleAddAction = () => {
-    console.log('添加');
+    ;
 };
 
 //编辑
 const handleEdit = async (row: API.CarRuleInfo) => {
-    console.log(row);
+    ;
     const flag = confirm('确认编辑吗？');
     if (!flag) {
         return;
     }
     const res = PutCarRule(row);
-    console.log(res);
+    ;
 };
 //删除
 const handleDel = async (row: API.CarRuleDetail) => {
-    console.log('删除');
+    ;
 
 
     const res = await DeleteCarRule(row.id);

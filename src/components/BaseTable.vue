@@ -146,7 +146,7 @@ const slots = useSlots()
 const baseTableRef = ref<InstanceType<typeof ElTable>>()
 
 watch(() => baseTableRef.value, (val) => {
-    console.log(val);
+    ;
 })
 
 type Emits = {
@@ -237,7 +237,7 @@ const handleClose = () => {
 }
 
 const handleCurrentChange = (val: number) => {
-    console.log('当前页: ' + val);
+    ;
     currentPage.value = val
 }
 const searchAction = () => {
@@ -249,12 +249,12 @@ const pageChange = (val: number) => {
 }
 
 const handlNextChange = () => {
-    console.log('下一页')
+
 }
 
 
 const handlPrevChange = () => {
-    console.log('上一页')
+
 }
 
 
@@ -268,7 +268,7 @@ const handleModel = (flag: 'add' | 'edit' | 'del') => {
 
 
 const handleSelectionChange = (val: T[]) => {
-    console.log(val);
+    ;
     emit('batchAction', val)
 }
 
@@ -282,7 +282,7 @@ defineExpose<Handlers<T>>({
     },
     //编辑表单时传递数据
     handleEdit: (params: T) => {
-        console.log(params);
+        ;
         formModal = params
         handleOpenModel('编辑' + props.title, 'edit')
     },

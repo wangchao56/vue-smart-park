@@ -39,7 +39,7 @@ const chargeTypeOptions = {
 
 onMounted(async () => {
     const res = await GetWorkbenchPaymentList();
-    console.log(res);
+    ;
     if (res.code === 10000) {
         carPaymentList.value = res.data.rows;
     }

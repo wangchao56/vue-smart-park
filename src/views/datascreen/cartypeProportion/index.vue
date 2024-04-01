@@ -21,18 +21,11 @@ const typeProportion = ref<API.CarTypeProportion>({
     tempProportion: 0
 });
 
-
-
-
-
-
-
 const options = computed(() => {
 
-
     const data = [
-        { value: unref(typeProportion)?.cardProportion * 100, name: '月卡车辆' },
-        { value: unref(typeProportion)?.tempProportion * 100, name: '临时车辆' },
+        { value: unref(typeProportion)?.cardProportion * 100, name: '月卡车辆', color: '#00B2FF' },
+        { value: unref(typeProportion)?.tempProportion * 100, name: '临时车辆', color: '#00B2FF' },
     ]
 
     return {
@@ -59,13 +52,9 @@ const options = computed(() => {
                 type: 'pie',
                 radius: '50%',
                 data,
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
+                label: {
+                    show: false,
+                },
             }
         ]
     }
@@ -73,7 +62,6 @@ const options = computed(() => {
 
 onMounted(async () => {
     const res = await GetCartypeProportion();
-    console.log('GetCartypeProportion', res);
     if (res.code === 10000) {
         typeProportion.value = res.data;
     }
@@ -92,6 +80,6 @@ onMounted(async () => {
 
 .content {
     width: 100%;
-    height: 400px;
+    height: 300px;
 }
 </style>

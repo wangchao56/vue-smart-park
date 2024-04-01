@@ -122,7 +122,7 @@ onMounted(() => {
     if (mode.value === 'carddetail') {
         getCarCardInfo();
     }
-    console.log('routeParams: ', routeParams);
+    ;
     if (mode.value === 'editcard') {
         getCarCardDetailhandler();
     }
@@ -133,7 +133,7 @@ const getCarCardInfo = async () => {
     const res = await GetCarCard(unref(carInfoId));
     if (res.code === 10000) {
         const carInfo = res.data;
-        console.log('carInfo: ', carInfo);
+        ;
         baseformModel.carNumber = carInfo.carNumber;
         baseformModel.personName = carInfo.personName;
         baseformModel.phoneNumber = carInfo.phoneNumber;
@@ -318,7 +318,7 @@ const handleAdd = async () => {
             router.back();
         }
     } catch (error) {
-        console.log('error: ', error);
+        ;
     }
 }
 // 编辑月卡
@@ -331,7 +331,7 @@ const handleEdit = async () => {
             router.back();
         }
     } catch (error) {
-        console.log('error: ', error);
+        ;
     }
 }
 // 续费月卡
@@ -352,7 +352,7 @@ const handleRenew = async () => {
             router.back();
         }
     } catch (error) {
-        console.log('error: ', error);
+        ;
     }
 }
 </script>

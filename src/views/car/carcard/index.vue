@@ -117,7 +117,7 @@ const columns: ColumnType[] = [
 ];
 
 const handleActions = (type: string, row: API.MonthCardInfo) => {
-    console.log(type, row);
+    ;
     switch (type) {
         case 'add':
             router.push('/car/addcard');
@@ -142,7 +142,7 @@ const handleBatchAction = (records: API.MonthCardInfo[]) => {
 };
 //删除和批量删除 
 const handleOneOrBatchDel = async (records: API.MonthCardInfo[]) => {
-    console.log(records);
+    ;
     const len = records.length;
     if (len === 0) {
         return;
@@ -173,7 +173,7 @@ const searchActionhandler = (_params: Omit<API.ShowCarMonthCard, 'page' | 'pageS
             tempParams[item.prop] = _params[item.prop] === 'all' ? '' : _params[item.prop];
         }
     });
-    console.log('tempParams: ', tempParams);
+    ;
     initDataSource({
         ...params,
         ...tempParams,

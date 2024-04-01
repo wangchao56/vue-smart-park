@@ -49,7 +49,7 @@ watch(() => props.option, () => {
 });
 
 onMounted(() => {
-    // console.log(1);
+    //  ;
     initEchart(echartDom.value);
 });
 onUnmounted(() => {

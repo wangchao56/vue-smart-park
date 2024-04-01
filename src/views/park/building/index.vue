@@ -129,12 +129,12 @@ const formRules = {
 
 const initGetBuildingList = async () => {
     const res = await GetBuildingList(params)
-    console.log(res)
+
     dataSource.value = addIndex(res.data.rows)
 }
 
 const handleSearch = async (record: API.BuildingInfo) => {
-    console.log(record);
+    ;
     Object.assign(params, record)
     await initGetBuildingList()
 
@@ -155,8 +155,8 @@ const blurhandler = (e: any) => {
 }
 
 const handleAction = (flag: UTIL.FormActionType, row: API.BuildingInfo) => {
-    console.log('row: ', row);
-    console.log(flag)
+    ;
+
     const { handleOpenModel, handleOpenDrawer } = unref(tableRef)
     switch (flag) {
         case 'add':
@@ -171,7 +171,7 @@ const handleAction = (flag: UTIL.FormActionType, row: API.BuildingInfo) => {
             handleOpenDrawer();
             break;
         case 'delete':
-            console.log('删除')
+
             handleDelete(row)
             break;
         default:
@@ -200,7 +200,7 @@ const formActionHandler = async (type: UTIL.FormActionType) => {
                 break;
         }
     } catch (error) {
-        console.log('error: ', error);
+        ;
         //表单验证失败 提示错误信息
         message.error('表单验证失败');
     }
@@ -209,7 +209,7 @@ const formActionHandler = async (type: UTIL.FormActionType) => {
 //增加
 const handleAdd = async (record: API.BuildingInfo) => {
     const res = await PostBuilding(record);
-    console.log('res: ', res);
+    ;
     if (res.code === 10000) {
         message.success('添加成功');
         // 关闭弹窗
@@ -223,7 +223,7 @@ const handleAdd = async (record: API.BuildingInfo) => {
 //编辑
 const handleEdit = async (record: API.BuildingInfo) => {
     const res = await PutBuilding(record);
-    console.log('res: ', res);
+    ;
     if (res.code === 10000) {
         message.success('编辑成功');
         // 关闭弹窗
@@ -245,7 +245,7 @@ const handleDelete = async (row: API.BuildingInfo) => {
             message.error(res.msg)
         }
     } catch (error) {
-        console.log(error)
+
         message.info('取消删除')
     }
 

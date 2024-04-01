@@ -71,7 +71,7 @@ const handleBatchAction = (records: API.PoleInfo[]) => {
 
 //批量删除
 const handleBatchDel = async () => {
-    console.log('selectedRows: ', selectedRows.value);
+    ;
     if (selectedRows.value.length === 0) {
         message.warning('请选择要删除的数据');
         return;
@@ -151,11 +151,11 @@ const columns: ColumnType[] = [
 const hanleActions = (type: string, row: API.PoleInfo) => {
     switch (type) {
         case 'edit':
-            console.log('编辑', row);
+            ;
             handleEdit(row);
             break;
         case 'delete':
-            console.log('删除', row);
+            ;
             handleDelete(row);
             break;
         default:
@@ -165,7 +165,7 @@ const hanleActions = (type: string, row: API.PoleInfo) => {
 
 //编辑
 const handleEdit = (row: API.PoleInfo) => {
-    console.log('编辑', row);
+    ;
 };
 
 //删除
@@ -179,10 +179,10 @@ const handleDeleteAndBatchDel = async (ids: string) => {
     try {
         await message.reminder('是否确认删除该数据');
         const res = await DetelePoleInfo(ids);
-        console.log('res: ', res);
+        ;
         message.success('删除成功');
     } catch (err) {
-        console.log('err: ', err);
+        ;
     }
 };
 

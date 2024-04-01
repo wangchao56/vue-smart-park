@@ -65,7 +65,7 @@ const tableRef = ref<Handlers<EnterpriseInfo>>()
 watch(
     () => tableRef.value,
     (value) => {
-        console.log(value);
+        ;
     }
 
 )
@@ -128,7 +128,7 @@ const contactForm = reactive<Record<string, any>>({
 
 const initGetEnterpriseList = async () => {
     const res = await GetEnterpriseList(params)
-    console.log(res)
+
     enterpriseList.value = (res.data.rows || []).map((item: API.EnterpriseBaseInfo, index) => {
         return {
             ...item,
@@ -146,10 +146,10 @@ watchEffect(() => {
 const currentPage = ref(1)
 
 const handleSizeChange = (val: number) => {
-    console.log(`每页 ${val} 条`)
+
 }
 const handleCurrentChange = (val: number) => {
-    console.log(`当前页: ${val}`)
+
 }
 
 const searchActionHandler = (_params: Record<string, any>) => {
@@ -162,7 +162,7 @@ const rentList = ref<API.RentInfo[]>([])
 //***需要优化
 const expandActionHandler = async (row: EnterpriseInfo) => {
 
-    console.log(row);
+    ;
     //如果有租赁信息则不再请求
     if (row.rentList && row.rentList.length) {
         rentList.value = row.rentList
@@ -185,61 +185,61 @@ const modelActionHandler = (flag: string, params?: API.EnterpriseBaseInfo) => {
     const { handleOpenModel, handleOpenDrawer } = unref(tableRef)
     switch (flag) {
         case 'add':
-            console.log('添加')
+
             handleOpenModel('添加企业', 'add')
             break;
         case 'edit':
-            console.log('编辑')
+
             handleOpenModel('编辑企业', 'add')
             handleEdit(params)
             break;
         case 'delete':
-            console.log('删除')
+
             handleDel(params)
             break;
         case 'detail':
-            console.log('查看')
+
             handleDetail(params)
             handleOpenDrawer()
             break;
         case 'contract':
-            console.log('添加合同')
+
             handleContract(params)
             break;
     }
 }
 //续租
 const handleRelet = () => {
-    console.log('续租')
+
 }
 
 //退租
 const hanleOffLease = () => {
-    console.log('退租')
+
 }
 
 //删除租赁信息
 const handleDelRent = () => {
-    console.log('删除租赁信息')
+
 }
 
 
 //删除 
 const handleDel = async (row: API.EnterpriseBaseInfo) => {
-    console.log(row)
+
 }
 
 //编辑
 
 const handleEdit = async (row: API.EnterpriseBaseInfo) => {
-    console.log(row)
-    console.log(tableRef.value);
+
+    ;
 }
 
 //添加合同
 const handleContract = async (row: API.EnterpriseBaseInfo) => {
     tableRef.value.handleOpenModel('添加合同')
-    console.log(row)
+
 }
 
 
@@ -248,7 +248,7 @@ const handleDetail = async (row: API.EnterpriseBaseInfo) => {
     if (!tableRef.value) return
     tableRef.value.handleOpenDrawer()
     const res = await GetEnterpriseDetail(row.id)
-    console.log(res)
+
 }
 
 </script>

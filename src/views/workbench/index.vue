@@ -223,7 +223,7 @@ const initGetPoleWarningList = async () => {
         pageSize: '10'
     }
     const res = await GetPoleWarningList(params)
-    console.log('res: ', res);
+        ;
     poleWarningListData.value = res.data.rows
 }
 
@@ -285,7 +285,7 @@ const parkEntry = reactive([
 ])
 
 watch(() => baseData.value, (newVal) => {
-    console.log('newVal: ', newVal);
+    ;
     parkEntry.forEach(item => {
         item.value = newVal[item.attr as keyof typeof newVal]
     })

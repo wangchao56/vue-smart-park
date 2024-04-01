@@ -861,6 +861,22 @@ namespace API {
         remark?: string;
     }
 
+    interface CarAreaInfo {
+        areaId: number | string;
+        areaName: string;
+        areaProportion: number;
+    }
+
+    interface CarParkInfo {
+        /** 总占用车位数量*/
+        occupancySpaceNum: number;
+        /**总空闲车位数量 */
+        remainSpaceNum: number;
+        /**实时车位占有率 */
+        spaceProportion: number;
+        /**车位总数量*/
+        totalSpaceNum: number;
+    }
 
     /**
      * 文件上传返回信息
@@ -921,6 +937,11 @@ namespace API {
     interface CarTypeProportion {
         cardProportion: number;
         tempProportion: number;
+    }
+
+    interface CarYearRevenue {
+        monthList: string[];
+        revenueList: number[]
     }
 
 

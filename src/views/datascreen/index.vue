@@ -23,15 +23,25 @@
                 </el-row>
             </el-main>
             <el-main v-else>
-                <el-row>
+                <el-row :gutter="32">
                     <el-col :span="8" class="car-admin-container">
-                        <Carsituation />
-                        <Carspaceuse />
+                        <div class="car-admin_item">
+                            <Carsituation />
+                        </div>
+                        <div class="car-admin_item">
+                            <Carspaceuse />
+                        </div>
                     </el-col>
                     <el-col :span="8" class="car-admin-container">
-                        <CarmonthRevenue />
-                        <CartypeProportion />
-                        <CaryearRevenue />
+                        <div class="car-admin_item">
+                            <CarmonthRevenue />
+                        </div>
+                        <div class="car-admin_item">
+                            <CartypeProportion />
+                        </div>
+                        <div class="car-admin_item">
+                            <CaryearRevenue />
+                        </div>
                     </el-col>
                     <el-col :span="8" class="car-admin-container">
                         <CarPaymentList />
@@ -58,12 +68,9 @@ import LogoSrc from '@/assets/images/datascreen-logo.png'
 import { GetParkStatisticsInfo } from '@/services'
 //获取可视区域宽高
 
-const { width, height } = window.screen;
-console.log(width, height);
-
 
 // 获取园区总览
-const flag = ref('car');
+const flag = ref('park');
 const switchPark = (type: string) => {
     flag.value = type;
 }
@@ -89,7 +96,7 @@ onMounted(async () => {
         resize: true
     });
     const { data } = await GetParkStatisticsInfo();
-    console.log(data);
+    ;
     parkoverviewData.value = data.base;
     parkIncome = data.parkIncome;
     parkIndustry.value = data.parkIndustry;
@@ -182,5 +189,11 @@ onMounted(async () => {
 
 .car-admin-container {
     height: 100%;
+
+    .car-admin_item {
+        width: 100%;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+    }
 }
 </style>

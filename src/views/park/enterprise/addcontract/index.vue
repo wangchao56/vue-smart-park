@@ -46,7 +46,7 @@ onMounted(() => {
 })
 
 watchEffect(() => {
-    console.log('contactForm', contactForm)
+
 })
 
 const contactInfo = reactive<API.ContractInfo>({
@@ -62,11 +62,11 @@ const contactInfo = reactive<API.ContractInfo>({
 // 提交
 // const submitForm = async () => {
 //     const res = await PostEnterpriseRent(contactForm)
-//     console.log(res)
+//      
 // }
 
 const handleFileSucccess = (data: API.UploadFileResInfo) => {
-    console.log('data: ', data);
+    ;
     // submitForm()
     if (!data) {
         return

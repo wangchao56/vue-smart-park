@@ -15,13 +15,26 @@ import { Application } from '@splinetool/runtime'
 // 导入loading组件
 import LoadingComponent from '@/components/LoadingComponent.vue'
 
+import Worker from '@/worker/index.ts?worker';
 
 // 调用接口拉取3d模型 渲染视图中
 const publisPath = 'https://fe-hmzs.itheima.net'
 const ref3d = ref(null)
 const showLoading = ref(false)
+// 模型太大耗时，需要异步加载
+//使用webwork   创建一个worker线程
 
 const init3dModel = () => {
+
+    // const worker = new Worker();
+    // worker.postMessage({
+    //     type: 'init',
+    //     data: {
+    //         url: publisPath + '/model/scene.gltf',
+    //         ref3d: ref3d.value
+    //     }
+    // });
+
     // 开启loading 
     if (!ref3d.value) return;
     showLoading.value = true
@@ -35,11 +48,14 @@ const init3dModel = () => {
     })
 }
 
+
 onMounted(async () => {
     // 获取原生的dom对象
     // 这个方法执行的时候 虽然在mounted中执行的 但是不能保证依赖的数据已经通过接口返回了
     // 解决方案：等到数据返回之后才进行初始化操作
-    init3dModel()
+    nextTick(() => {
+        init3dModel()
+    })
 })
 
 </script>

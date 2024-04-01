@@ -53,7 +53,7 @@ request.interceptors.response.use(response => {
 
 }
   , error => {
-    console.log('error: ', error);
+    ;
     //响应错误
     //token过期 处理
     return Promise.reject(error);

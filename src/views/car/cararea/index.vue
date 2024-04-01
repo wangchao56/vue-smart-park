@@ -137,7 +137,7 @@ onMounted(() => {
 });
 
 const handleAction = (type: string, row: API.ParkingAreaInfo) => {
-    console.log(type, row);
+    ;
     switch (type) {
         case 'add':
             unref(tableRef).handleOpenModel('添加区域', type);
@@ -172,7 +172,7 @@ const formActionHandler = async (type: string) => {
                 break;
         }
     } catch (error) {
-        console.log('error: ', error);
+        ;
         //表单验证失败 提示错误信息
         message.error('表单验证失败');
     }
@@ -182,7 +182,7 @@ const formActionHandler = async (type: string) => {
 const handleAdd = async (record: API.ParkingAreaInfo) => {
     const { id, ..._params } = record;
     const res = await PostParkingAreaApi(_params);
-    console.log('res: ', res);
+    ;
     if (res.code === 10000) {
         message.success('添加成功');
         // 关闭弹窗
@@ -196,7 +196,7 @@ const handleAdd = async (record: API.ParkingAreaInfo) => {
 //编辑操作
 const handleEdit = async (params: API.ParkingAreaInfo) => {
     const res = await PutParkingAreaApi(params);
-    console.log('res: ', res);
+    ;
     if (res.code === 10000) {
         message.success('编辑成功');
         // 关闭弹窗
@@ -214,7 +214,7 @@ const handleDelete = async (row: API.ParkingAreaInfo) => {
         const result = await message.reminder('是否确认删除该区域？');
         if (result === 'confirm') {
             const res = await DeleteParkingArea(row.id);
-            console.log('res: ', res);
+            ;
             if (res.code === 10000) {
                 message.success('删除成功');
             } else {

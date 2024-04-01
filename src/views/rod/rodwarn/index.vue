@@ -104,7 +104,7 @@ const columns: ColumnType[] = [
 ];
 
 const handleModel = (type: 'edit' | 'detail' | 'delete', row: API.WarningInfo) => {
-    console.log(type, row);
+    ;
 };
 
 

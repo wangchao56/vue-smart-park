@@ -159,7 +159,7 @@ const handleBack = () => {
 }
 
 const handleActions = (type: 'add' | 'edit' | 'reset') => {
-    console.log(type);
+    ;
 }
 
 

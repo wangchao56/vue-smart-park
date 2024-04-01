@@ -23,7 +23,7 @@ function useTableData<T>(params: any, api: keyof FinalApiTrigger) {
             const res = await ApiTrigger[api](params, {});
             tableData.value = res.data;
         } catch (error) {
-            console.log(error);
+            ;
         } finally {
             loading.value = false;
         }

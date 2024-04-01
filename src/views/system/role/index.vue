@@ -70,24 +70,24 @@ function addDisabled(treeList) {
 }
 onMounted(async () => {
     const res = await GetAllPermission()
-    console.log('res: ', res);
+        ;
     treeList.value = res.data
     addDisabled(treeList.value)
 
     const roleRes = await GetRoleList()
-    console.log('roleRes: ', roleRes);
+        ;
     roleList.value = roleRes.data
 })
 
 //获取角色详情
 async function getRoleDetail() {
     const res = await GetRoleDetail(roleId.value)
-    console.log('res: ', res);
+        ;
     rolePermissionList.value = res.data.perms;
 
     //设置高亮
     nextTick(() => {
-        console.log('treeRef.value: ', treeRef.value);
+        ;
         treeRef.value.forEach((node, index) => {
             node.setCheckedKeys(unref(rolePermissionList)[index])
         })

@@ -24,12 +24,12 @@ const emit = defineEmits<{
 
 const fileList = ref<any[]>([])
 const handleChange = (file: any, fileList: any) => {
-    console.log('file: ', file);
+    ;
     uploadFile(file);
 }
 
 const uploadFile = async (file: any) => {
-    console.log(file);
+    ;
     const formData = new FormData();
     formData.append('file', file.raw);
     if (props.type) {

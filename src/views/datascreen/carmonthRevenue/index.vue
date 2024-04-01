@@ -12,7 +12,7 @@
             <div class="cardRevenue-content">
                 <p class="header_title"> <span>本月月卡总收入</span><span>{{ cardRevenue }}元</span>
                 </p>
-                <el-progress :percentage="(cardRevenue / totalRevenue) * 100" :color="cardCustomColors">
+                <el-progress :percentage="(cardRevenue / totalRevenue) * 100 || 0" :color="cardCustomColors">
                     <el-icon v-if="cardRevenueTrend === 'reduce'" color="#FF5722">
                         <Bottom />
                     </el-icon>
@@ -23,7 +23,7 @@
             </div>
             <div class="parkingRevenue-content">
                 <p class="header_title"><span>本月停车总收入</span><span>{{ parkingRevenue }}元</span></p>
-                <el-progress :percentage="(parkingRevenue / totalRevenue) * 100" :color="customColors">
+                <el-progress :percentage="(parkingRevenue / totalRevenue) * 100 || 0" :color="customColors">
                     <el-icon v-if="parkingRevenueTrend === 'reduce'" color="#FF5722">
                         <Bottom />
                     </el-icon>
@@ -66,7 +66,7 @@ const customColors = [
 
 onMounted(async () => {
     const res = await GetCarMonthRevenue();
-    console.log(res);
+    ;
     if (res.code === 10000) {
         const { data } = res;
         cardRevenue.value = data.cardRevenue;
@@ -89,14 +89,20 @@ onMounted(async () => {
     padding-right: 50px;
 }
 
+.carRevenue_container {
+    margin-bottom: 16px;
+}
+
 .content {
     display: flex;
     flex-direction: column;
+    padding: 0px 32px;
 
     .totalRevenue-content {
         display: flex;
         justify-content: space-between;
         color: #fff;
+        background-image: linear-gradient(90deg, rgb(13, 20, 38), rgb(14, 23, 50) 50%, rgb(13, 20, 38));
     }
 }
 </style>

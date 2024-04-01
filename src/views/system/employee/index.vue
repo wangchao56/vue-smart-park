@@ -135,7 +135,7 @@ const params = reactive<API.PageParams & {
 
 // 获取员工列表
 const initData = async () => {
-    console.log('params: ', params);
+    ;
     const res = await GetUserListInfo(params)
     dataSource.value = addIndex(res.data.rows)
 }
@@ -152,7 +152,7 @@ const handleSearch = async (_params: any) => {
     await initData()
 }
 const clearValidate = () => {
-    console.log(addFormRef.value);
+    ;
     if (!addFormRef.value) return;
     addFormRef.value.clearValidate();
 }
@@ -187,7 +187,7 @@ const handleDelete = async (row: API.EmployeeInfo & { index: number }) => {
 }
 
 const handleFormAction = async (type: UTIL.FormActionType) => {
-    console.log(type);
+    ;
     switch (type) {
         case 'add':
             handleAddAction();
@@ -224,7 +224,7 @@ const handleAddAction = async () => {
     if (!isValid) return;
     // 提交表单
     const { id, ...formData } = addForm.value
-    console.log(formData);
+        ;
     //去掉id
     const res = await AddUser(formData, {
         'Content-Type': 'application/json'
@@ -260,7 +260,7 @@ const handleEditAction = async () => {
 }
 
 const handleResetPassword = async (record: API.UserProfile) => {
-    console.log(record);
+    ;
 }
 
 onMounted(() => {

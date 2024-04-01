@@ -74,7 +74,7 @@ export const GetCarParkInfo = () => {
     return request({
         url: '/parking/statistics/current',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarParkInfo>>
 }
 
 
@@ -89,7 +89,7 @@ export const GetCarAreaInfo = (params: API.PageParams) => {
         url: '/parking/statistics/space',
         method: 'get',
         params
-    })
+    }) as Promise<API.Response<API.ResListType<API.CarAreaInfo>>>
 }
 
 
@@ -114,7 +114,7 @@ export const GetCarYearRevenue = () => {
     return request({
         url: '/parking/statistics/yearRevenue',
         method: 'get'
-    })
+    }) as Promise<API.Response<API.CarYearRevenue>>
 }
 
 /**
