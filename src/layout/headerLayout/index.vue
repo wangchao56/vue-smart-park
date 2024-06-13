@@ -37,4 +37,12 @@ const handleLoginOut = () => {
 };
 </script>
 
-<style lang='scss' scoped></style>
+<style lang='scss' scoped>
+.header-avater {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 16px;
+    margin-top: 16px;
+}
+</style>

@@ -20,11 +20,7 @@
                     <div class="bottom">
                         <div class="left">
                             <p v-for="item in  options.children" :key="item.attr"><span>{{ item.label
-                                    }}</span><span>{{ item.unit ? `(${item.unit})：` : '：' }}</span> <span>{{
-            item.render ? item.render(buildinginfo[item.attr]) : buildinginfo[item.attr]
-        }}</span></p>
-                            <!-- <p><span>总面积(m²)：</span> <span>{{ buildinginfo.area }}</span></p>
-                            <p><span>承租单位：</span> <span>{{ buildinginfo.rentEnterpriseName || '无' }}</span></p> -->
+                                    }}</span><span>{{ item.unit ? `(${item.unit})：` : '：' }}</span> <span>{{ item.render ? item.render(buildinginfo[item.attr]) : buildinginfo[item.attr]}}</span></p>
                         </div>
                         <button class="model_btn">
                             {{ options.btn.render ? options.btn.render(buildinginfo[options.btn.attr]) :
@@ -87,40 +83,75 @@ const buildinginfo = ref<API.CarBuildingInfo | API.CarAreaDetail>({
     rentEnterpriseName: '', // 使用问号表示可选字段
 })
 
+const flag = ref<'work' | 'carpark'>('work')
 
-const options = ref<UTIL.CusOptions>({
-    top: {
-        attr: 'name',
-    },
-    children: [
-        {
-            label: '楼层数',
-            attr: 'floors'
-        },
-        {
-            label: '总面积',
-            unit: 'm²',
-            attr: 'area'
-        },
-        {
-            label: '承租单位',
-            attr: 'rentEnterpriseName',
-            render: (val: string) => {
-                return val || '无'
+const options = computed(() => {
+    if (flag.value === 'work') {
+        return {
+            top: {
+                attr: 'name',
+            },
+            children: [
+                {
+                    label: '楼层数',
+                    attr: 'floors'
+                },
+                {
+                    label: '总面积',
+                    unit: 'm²',
+                    attr: 'area'
+                },
+                {
+                    label: '承租单位',
+                    attr: 'rentEnterpriseName',
+                    render: (val: string) => {
+                        return val || '无'
+                    }
+                },
+            ],
+            btn: {
+                attr: 'status',
+                render: (val: string | number) => {
+                    return val === 1 ? '租赁中' : '空置中' as string
+                }
             }
-        },
-    ],
-    btn: {
-        attr: 'status',
-        render: (val: string | number) => {
-            return val === 1 ? '租赁中' : '空置中' as string
         }
     }
+    else if (flag.value === 'carpark') {
+        return {
+            top: {
+                attr: 'areaName',
+            },
+            children: [
+                {
+                    label: '空闲车位',
+                    attr: 'remainSpaceNum'
+                },
+                {
+                    label: '占用车位',
+                    attr: 'occupancySpaceNum'
+                },
+                {
+                    label: '停车位数',
+                    attr: 'totalSpaceNum'
+                },
+                {
+                    label: '面积',
+                    unit: 'm²',
+                    attr: 'areaProportion'
+                },
+            ],
+            btn: {
+                attr: 'spaceProportion',
+                render: (val: number | string) => {
+                    return `占用率:${(val as number) * 100}%`
+                }
+            }
+        }
+    }
+
+
 })
-
-
-
-
 
 //更据id获取模型信息
 const getModelInfoById = async (id: string) => {
@@ -131,73 +162,16 @@ const getModelInfoById = async (id: string) => {
         })
         const { data, code } = res;
         if (code === 10000) {
-            buildinginfo.value = data
-            options.value = {
-                top: {
-                    attr: 'name',
-                },
-                children: [
-                    {
-                        label: '楼层数',
-                        attr: 'floors'
-                    },
-                    {
-                        label: '总面积',
-                        unit: 'm²',
-                        attr: 'area'
-                    },
-                    {
-                        label: '承租单位',
-                        attr: 'rentEnterpriseName',
-                        render: (val: string) => {
-                            return val || '无'
-                        }
-                    },
-                ],
-                btn: {
-                    attr: 'status',
-                    render: (val: string | number) => {
-                        return val === 1 ? '租赁中' : '空置中' as string
-                    }
-                }
-            }
+            buildinginfo.value = data;
+            flag.value = 'work';
         }
     }
     else if (modelInfo.name.startsWith('停车场')) {
         const res = await GetCarAreaDetail(id)
         const { data, code } = res;
         if (code === 10000) {
-            buildinginfo.value = data
-            options.value = {
-                top: {
-                    attr: 'areaName',
-                },
-                children: [
-                    {
-                        label: '空闲车位',
-                        attr: 'remainSpaceNum'
-                    },
-                    {
-                        label: '占用车位',
-                        attr: 'occupancySpaceNum'
-                    },
-                    {
-                        label: '停车位数',
-                        attr: 'totalSpaceNum'
-                    },
-                    {
-                        label: '面积',
-                        unit: 'm²',
-                        attr: 'areaProportion'
-                    },
-                ],
-                btn: {
-                    attr: 'spaceProportion',
-                    render: (val: number | string) => {
-                        return `占用率:${(val as number) * 100}%`
-                    }
-                }
-            }
+            buildinginfo.value = data;
+            flag.value = 'carpark';
         }
     }
 }
@@ -232,20 +206,6 @@ const init3dModel = () => {
     spline.addEventListener('mouseDown', handleMouseDown);
 }
 
-// const modelInfoCache = ref(new Map());
-
-// async function getModelInfoById(id) {
-//   if (modelInfoCache.value.has(id)) {
-//     return modelInfoCache.value.get(id);
-//   }
-
-//   const info = await fetchModelInfoById(id); // 假设这是获取模型信息的函数
-//   modelInfoCache.value.set(id, info);
-
-//   return info;
-// }
-
-
 const handleMouseMove = (e) => {
     mouse = {
         x: e.clientX,
@@ -257,11 +217,13 @@ const handleContextMenu = (e) => {
     e.preventDefault();
     closeModel();
 };
+
 watchEffect(async () => {
     if (ref3d.value) {
         init3dModel();
     }
 });
+
 onMounted(async () => {
     // 获取原生的dom对象
     // 这个方法执行的时候 虽然在mounted中执行的 但是不能保证依赖的数据已经通过接口返回了
@@ -269,6 +231,7 @@ onMounted(async () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('contextmenu', handleContextMenu);
 })
+
 onUnmounted(() => {
     window.removeEventListener('mousemove', handleMouseMove);
     window.removeEventListener('contextmenu', handleContextMenu);

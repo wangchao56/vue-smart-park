@@ -5,7 +5,7 @@
   "type": "module",
   "typings": "types/index.d.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port=52221",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
